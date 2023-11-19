@@ -1,0 +1,16 @@
+# The purpose of this file is to tell Git which files or directories to
+# ignore when committing. Any file or directory tracked in this file won't
+# be committed or pushed into the remote repository.
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Python-specific
+__pycache__/
+*.pyc
+
+# macOS-specific
+.DS_Store
