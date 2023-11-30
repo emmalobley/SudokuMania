@@ -54,6 +54,7 @@ We are building an app to play the game sudoku on.👾
 1. Meeting twice weekly on Wednesdays and Sundays with set goals determined at each meet. Tasks assigned on Trello board.
 
 2. Build the database to be able to store difficulty, time and uncompleted and completed boards and the user name.
+   
 2.1 In python add the api calls to the api that can request the sudoku with the desired difficulty.
 2.2 In python create the functions that can allow the user to add numbers to the sudoku.
 2.3 In python create a function that can check whether a solution is correct.
