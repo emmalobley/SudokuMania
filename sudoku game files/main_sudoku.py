@@ -17,31 +17,29 @@ asciiBoard = "\=======+=======+=======/\n" \
              "/=======+=======+=======\ "
 
 # boolean function, validate if sudoku is completed
-def completed_sudoku(board, solution):
-    return board == solution
+# update check method - cannot compare to solution grid with this api
+# def completed_sudoku(board, solution):
+#     return board == solution
 
 # get difficulty from user
 def get_difficulty():
     # .title so input won't be case sens
-    difficulty = input("Please select difficulty: ").title()
+    difficulty = input("Please select difficulty: ").lower()
     while not valid_difficulty(difficulty):
-        difficulty = input("Invalid choice. Please select difficulty: ").title()
+        difficulty = input("Invalid choice. Please select difficulty: ").lower()
     return difficulty
 
 # check user choice of number valid
 def valid_difficulty(difficulty):
-    return difficulty in {"Easy", "Medium", "Hard"}
+    return difficulty in {"easy", "medium", "hard"}
 
 # loop until you get a board of your chosen difficulty
 # look into more efficient way of doing this if time allows
 def get_sudoku(difficulty):
-    while True:
-        endpoint = "https://sudoku-api.vercel.app/api/dosuku"
-        response = requests.get(endpoint)
-        sudoku = response.json()['newboard']['grids'][0]
-
-        if sudoku['difficulty'] == difficulty:
-            return sudoku['value'], sudoku['solution']
+    endpoint = 'https://sudoku-game-and-api.netlify.app/api/sudoku'
+    response = requests.get(endpoint)
+    sudoku = response.json()
+    return sudoku[difficulty]
 
 def get_user_move():
     user_row = int(input(" Please select row (1-9): "))
@@ -65,12 +63,14 @@ def valid_number(number):
 
 def main():
     difficulty = get_difficulty()
-    board, solution = get_sudoku(difficulty)
+    board = get_sudoku(difficulty)
     print("     Welcome to sudoku! ")
-    print(f'    Difficulty = {difficulty}')
+    print(f'    Difficulty = {difficulty.title()}')
     # pp(board)
 
-    while not completed_sudoku(board, solution):
+    # cannot check against sol board so using i as placeholder for now
+    i = 0
+    while i < 10: # not completed_sudoku(board, solution):
 
         single_list = [num for slist in board for num in slist]
 
@@ -98,12 +98,14 @@ def main():
         user_col = user_move[1] - 1
         user_num = user_move[2]
 
-        if solution[user_row][user_col] == user_num:
-            print("         Correct!")
-            board[user_row][user_col] = user_num
+        board[user_row][user_col] = user_num
 
-        else:
-            print(" Incorrect. Try again.")
+        # if solution[user_row][user_col] == user_num:
+        #     print("         Correct!")
+        #     board[user_row][user_col] = user_num
+        #
+        # else:
+        #     print(" Incorrect. Try again.")
 
         # pp(board)
 
