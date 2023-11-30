@@ -41,20 +41,16 @@ asciiBoard2 = "\=======+=======+=======/\n" \
              "| . . . | . . . | . . . |\n" \
              "/=======+=======+=======\ "
 
-
-
-pp(sudoku)
+# pp(sudoku)
 print("\nThis is a randomly generated sudoku board from API: ")
-
+pp(board)
 print("\nSolution to board: ")
-
 pp(solution)
 
 # pygame or turtle ---
 
 # pandas table - labels help with identifying row/col # potential for jupyter notebooks etc interactive-ness
-print("\npandas option: ")
-
+print("\nSudoku board in pandas format table: ")
 print(pandaBoard)
 
 # ASCII symbol board - different designs - could enter sudoku board data in a for loop
