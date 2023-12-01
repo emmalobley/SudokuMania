@@ -44,9 +44,6 @@ We are building an app to play the game sudoku on.👾
 
     
 
-# Sample architecture diagram of system 
-
-![image](https://github.com/emmalobley/CFG-Final-Project/assets/147548717/5ab5f476-4c77-42ee-b46e-b6ce30535e21)
 
 
 # Team approach to project work
