@@ -1,5 +1,5 @@
 import mysql.connector
-from db_config import HOST, USER, PASSWORD, DATABASE
+from src.db.config import HOST, USER, PASSWORD, DATABASE
 
 #function to connect to the db using the user's details stored in the cofig file
 #which is imported above

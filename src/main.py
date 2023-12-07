@@ -1,6 +1,6 @@
+from src.db.connect import _connect_to_db
+
 import requests
-# import pandas as pd
-# from pprint import pprint as pp
 
 
 class SudokuBoard:
@@ -43,22 +43,22 @@ class SudokuBoard:
 
         return result
 
-    def get_board(self):
-        return self.board
+    # def get_board(self):
+    #     return self.board
 
     def update_board(self, row, col, num):
         self.board[row][col] = num
 
+    #     def check_solution ?
+
 
 # boolean function, validate if sudoku is completed
-# update check method - cannot compare to solution grid with this api
-# def completed_sudoku(board, solution):
-#     return board == solution
+# def completed_sudoku(board):
+#     return
 
 
 # get difficulty from user
 def get_difficulty():
-    # .title so input won't be case sens
     difficulty = input("Please select difficulty: ").lower()
     while not valid_difficulty(difficulty):
         difficulty = input("Invalid choice. Please select difficulty: ").lower()
@@ -106,11 +106,10 @@ def main():
 
     print("     Welcome to sudoku! ")
     print(f'    Difficulty = {difficulty.title()}')
-    # pp(board)
 
     # cannot check against sol board so using i as placeholder for now
     i = 0
-    while i < 10:  # not completed_sudoku(board, solution):
+    while i < 10:  # not completed_sudoku(board):
         print(new_board.format_board())
         user_move = get_user_move()
         new_board.update_board(user_move[0], user_move[1], user_move[2])
@@ -123,3 +122,29 @@ if __name__ == "__main__":
             main()
         except EOFError:
             break
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# loops for game running
+
+# def fetch new board
+#
+# def solved (board, solution)
+#     return board == solution
+#
+# while not solved(board, solution)
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# functions to create
+
+# def store highscore/times/game history # database
+
+# def get_time_taken
+
+# def check_saved
+
+# def check_solution
+
+# def restart_puzzle
