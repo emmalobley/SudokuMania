@@ -4,8 +4,9 @@ import requests
 
 
 class SudokuBoard:
-    def __init__(self, board):
+    def __init__(self, board, difficulty):
         self.board = board
+        self.difficulty = difficulty
 
     def format_board(self):
         ascii_board = "\=======+=======+=======/\n" \
@@ -22,35 +23,38 @@ class SudokuBoard:
           "| . . . | . . . | . . . |\n" \
           "/=======+=======+=======\ "
 
+        # store sudoku board as list
         single_list = [num for slist in self.board for num in slist]
 
-        # put sudoku list into a condensed list
-        result = []
+        result = ""
         index = 0
 
-        # check if the character in the board is a '.'
         for char in ascii_board:
-            if char == '.':
-                # check if the number is 0 / replace with dot if so
-                if single_list[index] == 0:
-                    result.append('.')
-                else:  # put numbers into asciiBoard
-                    result.append(str(single_list[index]))
+            if char == '.' and single_list[index] != 0:
+                # put numbers into asciiBoard
+                result += str(single_list[index])
+                index += 1
+            elif char == ".":
+                # 0's in board stored as dot
+                result += char
                 index += 1
             else:
-                result.append(char)
+                result += char
 
-        new_ascii = ''.join(result)
-        return new_ascii
+        return result
 
     def get_board(self):
         return self.board
+
+    def update_board(self, row, col, num):
+        self.board[row][col] = num
 
 
 # boolean function, validate if sudoku is completed
 # update check method - cannot compare to solution grid with this api
 # def completed_sudoku(board, solution):
 #     return board == solution
+
 
 # get difficulty from user
 def get_difficulty():
@@ -66,9 +70,7 @@ def valid_difficulty(difficulty):
     return difficulty in {"easy", "medium", "hard"}
 
 
-# loop until you get a board of your chosen difficulty
-# look into more efficient way of doing this if time allows
-def get_new_sudoku(difficulty):
+def get_sudoku_from_api(difficulty):
     endpoint = 'https://sudoku-game-and-api.netlify.app/api/sudoku'
     response = requests.get(endpoint)
     sudoku = response.json()
@@ -99,8 +101,8 @@ def valid_number(number):
 
 def main():
     difficulty = get_difficulty()
-    board = get_new_sudoku(difficulty)
-    new_board = SudokuBoard(board)
+    board = get_sudoku_from_api(difficulty)
+    new_board = SudokuBoard(board, difficulty)
 
     print("     Welcome to sudoku! ")
     print(f'    Difficulty = {difficulty.title()}')
@@ -111,7 +113,7 @@ def main():
     while i < 10:  # not completed_sudoku(board, solution):
         print(new_board.format_board())
         user_move = get_user_move()
-        new_board.get_board()[user_move[0]][user_move[1]] = user_move[2]
+        new_board.update_board(user_move[0], user_move[1], user_move[2])
 
 
 if __name__ == "__main__":
