@@ -1,5 +1,4 @@
 from src.db.connect import _connect_to_db
-
 import requests
 
 
