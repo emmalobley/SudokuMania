@@ -10,18 +10,18 @@ class SudokuBoard:
 
     def format_board(self):
         ascii_board = "\=======+=======+=======/\n" \
-          "| . . . | . . . | . . . |\n" \
-          "| . . . | . . . | . . . |\n" \
-          "| . . . | . . . | . . . |\n" \
-          "+-------+-------+-------+\n" \
-          "| . . . | . . . | . . . |\n" \
-          "| . . . | . . . | . . . |\n" \
-          "| . . . | . . . | . . . |\n" \
-          "+-------+-------+-------+\n" \
-          "| . . . | . . . | . . . |\n" \
-          "| . . . | . . . | . . . |\n" \
-          "| . . . | . . . | . . . |\n" \
-          "/=======+=======+=======\ "
+                      "| . . . | . . . | . . . |\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "+-------+-------+-------+\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "+-------+-------+-------+\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "| . . . | . . . | . . . |\n" \
+                      "/=======+=======+=======\ "
 
         # store sudoku board as list
         single_list = [num for slist in self.board for num in slist]
@@ -49,7 +49,32 @@ class SudokuBoard:
     def update_board(self, row, col, num):
         self.board[row][col] = num
 
-    #     def check_solution ?
+    # This function checks whether the board is filled in
+    def check_completed(self):
+        for i in range(9):
+            for j in range(9):
+                if self.board[i][j] == 0:
+                    return False
+        return True
+
+    # This function will return True if the board is a valid solution
+    def check_solution(self):
+        # check there are unique numbers in each row
+        for i in range(9):
+            if len(set([x for x in self.board[i]])) != 9:
+                return False
+        # check there are unique numbers in each column
+        for j in range(9):
+            if len(set([self.board[i][j] for i in range(9)])) != 9:
+                return False
+        # check there are unique numbers in each square
+        for i in range(3):
+            for j in range(3):
+                digits_in_square = [self.board[3 * i + a][3 * j] for a in range(3)] + [self.board[3 * i + a][3 * j + 1] for a in range(3)] + [self.board[3 * i + a][3 * j + 2] for a in range(3)]
+
+                if len(set(digits_in_square)) != 9:
+                    return False
+        return True
 
 
 # boolean function, validate if sudoku is completed
@@ -107,12 +132,19 @@ def main():
     print("     Welcome to sudoku! ")
     print(f'    Difficulty = {difficulty.title()}')
 
-    # cannot check against sol board so using i as placeholder for now
-    i = 0
-    while i < 10:  # not completed_sudoku(board):
+    solved = False
+    while not solved:
         print(new_board.format_board())
         user_move = get_user_move()
         new_board.update_board(user_move[0], user_move[1], user_move[2])
+        completed = new_board.check_completed()
+        if completed:
+            solved = new_board.check_solution()
+            if not solved:
+                print("You've made a mistake somewhere.")
+    # STOP TIMER
+    # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
+    print("Well done!")
 
 
 if __name__ == "__main__":
@@ -122,7 +154,6 @@ if __name__ == "__main__":
             main()
         except EOFError:
             break
-
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
