@@ -70,7 +70,9 @@ class SudokuBoard:
         # check there are unique numbers in each square
         for i in range(3):
             for j in range(3):
-                digits_in_square = [self.board[3 * i + a][3 * j] for a in range(3)] + [self.board[3 * i + a][3 * j + 1] for a in range(3)] + [self.board[3 * i + a][3 * j + 2] for a in range(3)]
+                digits_in_square = [self.board[3 * i + a][3 * j] for a in range(3)] + [self.board[3 * i + a][3 * j + 1]
+                                                                                       for a in range(3)] + [
+                                       self.board[3 * i + a][3 * j + 2] for a in range(3)]
 
                 if len(set(digits_in_square)) != 9:
                     return False
@@ -103,9 +105,21 @@ def get_sudoku_from_api(difficulty):
 
 
 def get_user_move():
-    user_row = int(input(" Please select row (1-9): "))
+    user_row = input(" Please select row (1-9): ")
+    if user_row == 'exit':
+        return 'exit'
+    else:
+        user_row = int(user_row)
     user_col = int(input(" Please select column (1-9): "))
+    if user_col == 'exit':
+        return 'exit'
+    else:
+        user_col = int(user_col)
     user_num = int(input(" Please enter number (1-9): "))
+    if user_num == 'exit':
+        return 'exit'
+    else:
+        user_num = int(user_num)
 
     while not valid_number(user_row):
         user_row = int(input(" Invalid choice of row, please try again: "))
@@ -122,50 +136,87 @@ def valid_number(number):
     return number in {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
-# ~~~~~~~~~~~ main game loop ~~~~~~~~~~~~~~~~~~
-
-def main():
+def generate_new_board():
     difficulty = get_difficulty()
     board = get_sudoku_from_api(difficulty)
     new_board = SudokuBoard(board, difficulty)
-
-    print("     Welcome to sudoku! ")
     print(f'    Difficulty = {difficulty.title()}')
+    return new_board
+
+
+def play_game(board):
+    print("Type exit to return to menu at any point.")
 
     solved = False
+
     while not solved:
-        print(new_board.format_board())
+        print(board.format_board())
         user_move = get_user_move()
-        new_board.update_board(user_move[0], user_move[1], user_move[2])
-        completed = new_board.check_completed()
+        if user_move == 'exit':
+            # SAVE BOARD TO DATABASE
+            print("Your game has been saved.")
+            break
+        board.update_board(user_move[0], user_move[1], user_move[2])
+        completed = board.check_completed()
         if completed:
-            solved = new_board.check_solution()
+            solved = board.check_solution()
             if not solved:
                 print("You've made a mistake somewhere.")
     # STOP TIMER
     # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
-    print("Well done!")
+    if solved:
+        print("Well done!")
 
+
+# This is a test board to test the continue game option.
+# Can be removed when connection to database is added.
+uncompleted = [[0, 2, 1, 0, 9, 0, 5, 0, 0],
+               [5, 7, 9, 0, 8, 4, 0, 2, 0],
+               [6, 8, 4, 3, 2, 5, 0, 7, 9],
+               [1, 4, 2, 0, 0, 9, 0, 0, 0],
+               [7, 9, 3, 5, 0, 8, 2, 4, 1],
+               [0, 5, 6, 4, 1, 2, 9, 0, 7],
+               [9, 6, 0, 2, 7, 0, 4, 5, 0],
+               [4, 1, 0, 0, 5, 3, 6, 9, 2],
+               [2, 0, 5, 9, 4, 0, 7, 0, 8]]
+uncompletedBoard = SudokuBoard(uncompleted, 'easy')
+
+
+menu_options = {1: "New Game",
+                2: "Continue",
+                3: "View Highscores",
+                4: "Exit"}
+
+
+def print_menu_options():
+    for i in range(4):
+        print(str(i + 1) + ": " + menu_options[i + 1])
+
+
+# ~~~~~~~~~~~ main game loop ~~~~~~~~~~~~~~~~~~
 
 if __name__ == "__main__":
-    while True:
-        try:
-            print("Press 'control' + 'd' to quit at any point.")
-            main()
-        except EOFError:
-            break
+    print("Welcome to sudoku!")
+    wants_to_play = True
+    while wants_to_play:
+        print_menu_options()
+        choice = int(input("Please choose a menu option by typing it's number: "))
+        if choice == 1:
+            new_board = generate_new_board()
+            play_game(new_board)
+        if choice == 2:
+            print("Here is your previously saved game: ")
+            #     fetch most recent board from database here
+            test_board = uncompletedBoard
+            play_game(test_board)
+        if choice == 3:
+            #     find highscores in database and print them here
+            print("This is where highscores will go.")
+        if choice == 4:
+            print("Thank you for playing!")
+            wants_to_play = False
+            exit()
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#
-# loops for game running
-
-# def fetch new board
-#
-# def solved (board, solution)
-#     return board == solution
-#
-# while not solved(board, solution)
-#
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # functions to create
@@ -175,7 +226,5 @@ if __name__ == "__main__":
 # def get_time_taken
 
 # def check_saved
-
-# def check_solution
 
 # def restart_puzzle
