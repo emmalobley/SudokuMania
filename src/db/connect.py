@@ -1,11 +1,13 @@
 import mysql.connector
 from src.db.config import HOST, USER, PASSWORD, DATABASE
 
+
 class DbConnectionError(Exception):
     pass
 
-#function to connect to the db using the user's details stored in the cofig file
-#which is imported above
+
+# function to connect to the db using the user's details stored in the config file
+# which is imported above
 def _connect_to_db():
     cnx = mysql.connector.connect(
         host=HOST,
@@ -16,8 +18,10 @@ def _connect_to_db():
     )
     return cnx
 
+
 # dummy data to test add_player function
-player_name = "Jane"
+name = "Jane"
+
 
 def add_player(player_name):
     try:
@@ -41,9 +45,8 @@ def add_player(player_name):
     print("Player added to DB")
 
 
-
 # dummy data to test insert_new_board function
-board = {
+sudoku_board = {
     'player_id': '1',
     'Difficulty': 'Easy',
     'Completed': 'TRUE',  # this is stored as 1 in sql (0 is boolean false)
@@ -58,27 +61,29 @@ board = {
     'Row_9': "2, 0, 5, 9, 4, 0, 7, 0, 8"
 }
 
+
 def insert_new_board(board):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
         print("Connected to DB: %s" % DATABASE)
 
-        query = """INSERT INTO boards ({}) VALUES ({}, '{}', {}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(
-            ', '.join(board.keys()),
-            board['player_id'],
-            board['Difficulty'],
-            board['Completed'],
-            board['Row_1'],
-            board['Row_2'],
-            board['Row_3'],
-            board['Row_4'],
-            board['Row_5'],
-            board['Row_6'],
-            board['Row_7'],
-            board['Row_8'],
-            board['Row_9'],
-        )
+        query = (
+            """INSERT INTO boards ({}) VALUES ({}, '{}', {}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')"""
+            .format(', '.join(board.keys()),
+                    board['player_id'],
+                    board['Difficulty'],
+                    board['Completed'],
+                    board['Row_1'],
+                    board['Row_2'],
+                    board['Row_3'],
+                    board['Row_4'],
+                    board['Row_5'],
+                    board['Row_6'],
+                    board['Row_7'],
+                    board['Row_8'],
+                    board['Row_9'],
+                    ))
         cur.execute(query)
         db_connection.commit()
         cur.close()
@@ -115,7 +120,6 @@ def get_boards():
 
         cur.close()
 
-
     except Exception:
         raise DbConnectionError("Failed to read data from DB")
 
@@ -126,9 +130,10 @@ def get_boards():
 
 
 def main():
-    add_player(player_name)
-    insert_new_board(board)
+    add_player(name)
+    insert_new_board(sudoku_board)
     get_boards()
+
 
 if __name__ == '__main__':
     main()

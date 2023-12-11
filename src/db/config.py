@@ -1,4 +1,4 @@
-HOST = "YOUR HOST"
-USER = "YOUR USER NAME"
+HOST = "YOUR HOST"  # localhost
+USER = "YOUR USER NAME"  # root
 PASSWORD = "YOUR PASSWORD"
 DATABASE = "sudoku"
