@@ -80,43 +80,43 @@ def save_to_boards_table(boards_data):
             print("Db connection is closed")
 
 
-# def sudoku_board():
-#     try:
-#         db_connection = _connect_to_db()
-#         cur = db_connection.cursor()
-#         print("Connected to DB: sudoku")
-#
+def sudoku_board():
+    try:
+        db_connection = _connect_to_db()
+        cur = db_connection.cursor()
+        print("Connected to DB: sudoku")
+
             # figure out how to write this query in python:
-#         query = """SELECT p.player_name,
-#                         b.row_1,
-#                         b.row_2,
-#                         b.row_3,
-#                         b.row_4,
-#                         b.row_5,
-#                         b.row_6,
-#                         b.row_7,
-#                         b.row_8,
-#                         b.row_9
-#                 FROM player p
-#                 INNER JOIN boards b ON p.player_id = b.player_id
-#                 WHERE b.completed = False;"""
-#
-#         cur.execute(query)
-#         db_connection.commit()
-#         result = cur.fetchall() #check is fetchall is correct or if it's fetchmany
-#
-#         #to print each row on a new line:
-#         for i in result:
-#             print(i)
-#         cur.close()
-#
-#     except Exception:
-#         raise DbConnectionError("Failed to read data from DB")
-#
-#     finally:
-#         if db_connection:
-#             db_connection.close()
-#             print("Db connection is closed")
+        query = """SELECT p.player_name,
+                        b.row_1,
+                        b.row_2,
+                        b.row_3,
+                        b.row_4,
+                        b.row_5,
+                        b.row_6,
+                        b.row_7,
+                        b.row_8,
+                        b.row_9
+                FROM player p
+                INNER JOIN boards b ON p.player_id = b.player_id
+                WHERE b.completed = False;"""
+
+        cur.execute(query)
+        db_connection.commit()
+        result = cur.fetchall() #check is fetchall is correct or if it's fetchmany
+
+        #to print each row on a new line:
+        for row in result:
+            print(row)
+        cur.close()
+
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("Db connection is closed")
 
 
 def main():
