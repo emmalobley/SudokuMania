@@ -34,13 +34,13 @@ def add_player(player_name):
         db_connection.commit()
         cur.close()
 
-    except Exception:
-        raise DbConnectionError("Failed to read data from DB")
-
-    finally:
         if db_connection:
             db_connection.close()
             print("DB connection is closed")
+
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
+
 
     print("Player added to DB")
 
@@ -88,13 +88,13 @@ def insert_new_board(board):
         db_connection.commit()
         cur.close()
 
-    except Exception:
-        raise DbConnectionError("Failed to read data from DB")
-
-    finally:
         if db_connection:
             db_connection.close()
             print("DB connection is closed")
+
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
+
 
     print("Board added to DB")
 
@@ -106,27 +106,29 @@ def get_boards():
         cur = db_connection.cursor()
         print("Connected to DB: %s" % DATABASE)
 
-        query = """SELECT player_id, Difficulty, Completed, Row_1, Row_2, Row_3, Row_4,
+        query = """SELECT board_id, Difficulty, Completed, Row_1, Row_2, Row_3, Row_4,
     Row_5, Row_6, Row_7, Row_8, Row_9 FROM boards"""
         cur.execute(query)
         result = cur.fetchall()
 
         for i in result:
-            print(i)
+            # print(i)
             if i[2] == 1:
-                print("Board is completed!")  # completed
+                print("Board {} is completed!".format(i[0]))  # completed
             else:
-                print("Board incomplete")
+                print("Board {} incomplete".format(i[0]))
 
         cur.close()
+
+        if db_connection:
+            db_connection.close()
+            print("DB connection is closed")
 
     except Exception:
         raise DbConnectionError("Failed to read data from DB")
 
-    finally:
-        if db_connection:
-            db_connection.close()
-            print("DB connection is closed")
+
+    return result
 
 
 def main():
