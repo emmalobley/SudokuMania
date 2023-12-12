@@ -33,7 +33,7 @@ def save_player_time(time):
         cur = db_connection.cursor()
         print("Connected to DB: sudoku")
 
-        query = """INSERT INTO player({}) VALUES('{}')""".format('total_time', time)
+        query = """INSERT INTO player_time({}) VALUES('{}')""".format('total_time', time)
         cur.execute(query)
         db_connection.commit()
         cur.close()
