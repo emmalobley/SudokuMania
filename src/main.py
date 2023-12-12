@@ -1,5 +1,6 @@
 from src.db.connect import _connect_to_db
 import requests
+from copy import deepcopy
 
 
 class SudokuBoard:
@@ -107,16 +108,22 @@ def get_user_move():
     user_row = input(" Please select row (1-9): ")
     if user_row == 'exit':
         return 'exit'
+    elif user_row == 'restart':
+        return 'restart'
     else:
         user_row = int(user_row)
     user_col = int(input(" Please select column (1-9): "))
     if user_col == 'exit':
         return 'exit'
+    elif user_row == 'restart':
+        return 'restart'
     else:
         user_col = int(user_col)
     user_num = int(input(" Please enter number (1-9): "))
     if user_num == 'exit':
         return 'exit'
+    elif user_row == 'restart':
+        return 'restart'
     else:
         user_num = int(user_num)
 
@@ -145,8 +152,13 @@ def generate_new_board():
 
 def play_game(board):
     print("Type exit to return to menu at any point.")
+    print("Type restart to clear the board.")
+    restart_board = deepcopy(board)
 
     solved = False
+    completed = board.check_completed()
+    if completed:
+        solved = board.check_solution()
 
     while not solved:
         print(board.format_board())
@@ -154,6 +166,9 @@ def play_game(board):
         if user_move == 'exit':
             # SAVE BOARD TO DATABASE
             print("Your game has been saved.")
+            break
+        elif user_move == 'restart':
+            play_game(restart_board)
             break
         board.update_board(user_move[0], user_move[1], user_move[2])
         completed = board.check_completed()
@@ -225,5 +240,3 @@ if __name__ == "__main__":
 # def get_time_taken
 
 # def check_saved
-
-# def restart_puzzle
