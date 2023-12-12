@@ -9,7 +9,7 @@ stop_time = 0
 
 
 # calculate the time taken and convert to readable format
-# need to rework minutes as over an hour will show 61, 62, 63 etc
+
 def calc_time_taken():
     if start_time:
         time_taken = stop_time - start_time
