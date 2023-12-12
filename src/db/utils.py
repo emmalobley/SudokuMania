@@ -1,4 +1,4 @@
-from src.db.connect import _connect_to_db
+from connect import _connect_to_db
 
 
 class DbConnectionError(Exception):
