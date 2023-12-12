@@ -1,4 +1,4 @@
-from src.db.connect import _connect_to_db
+from src.db.utils import get_board_from_db
 import requests
 
 
@@ -205,6 +205,7 @@ if __name__ == "__main__":
             play_game(new_board)
         if choice == 2:
             print("Here is your previously saved game: ")
+            print(get_board_from_db())
             #     fetch most recent board from database here
             test_board = uncompletedBoard
             play_game(test_board)
