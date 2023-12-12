@@ -65,6 +65,7 @@ def main():
             play_game(new_board)
         if choice == 2:
             print("Here is your previously saved game: ")
+            print(get_board_from_db())
             #     fetch most recent board from database here
             test_board = uncompletedBoard
             play_game(test_board)
