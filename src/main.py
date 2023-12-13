@@ -1,6 +1,6 @@
 from src.db.connect import _connect_to_db
 import requests
-from timedecorator import record_start_time, record_stop_time
+from timedecorator import record_time
 
 
 class SudokuBoard:
@@ -58,7 +58,6 @@ class SudokuBoard:
         return True
 
     # This function will return True if the board is a valid solution
-    @record_stop_time
     def check_solution(self):
         # check there are unique numbers in each row
         for i in range(9):
@@ -98,7 +97,6 @@ def valid_difficulty(difficulty):
     return difficulty in {"easy", "medium", "hard"}
 
 
-@record_start_time
 def get_sudoku_from_api(difficulty):
     endpoint = 'https://sudoku-game-and-api.netlify.app/api/sudoku'
     response = requests.get(endpoint)
@@ -146,6 +144,7 @@ def generate_new_board():
     return new_board
 
 
+@record_time
 def play_game(board):
     print("Type exit to return to menu at any point.")
 
