@@ -76,6 +76,15 @@ class SudokuBoard:
                     return False
         return True
 
+    def save_board(self):
+        boards_data = {
+            "player_id": self.player_id,
+            "difficulty": self.difficulty,
+            "completed": self.check_completed()
+            }
+        for i, line in enumerate(self.board):
+            boards_data["row_{}".format(i + 1)] = ''.join(map(str, line))
+        save_to_boards_table(boards_data)
 
 # boolean function, validate if sudoku is completed
 # def completed_sudoku(board):

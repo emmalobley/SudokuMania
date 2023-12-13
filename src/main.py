@@ -13,6 +13,7 @@ def play_game(board):
         user_move = get_user_move()
         if user_move == 'exit':
             # SAVE BOARD TO DATABASE
+            board.save_board()
             print("Your game has been saved.")
             break
         board.update_board(user_move[0], user_move[1], user_move[2])
