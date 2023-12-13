@@ -5,41 +5,6 @@ from sudoku_board import SudokuBoard, generate_new_board
 from db.utils import get_board_from_db
 from copy import deepcopy
 
-
-# needs updating in user.py
-def get_user_move():
-    user_row = input(" Please select row (1-9): ")
-    if user_row == 'exit':
-        return 'exit'
-    elif user_row == 'restart':
-        return 'restart'
-    else:
-        user_row = int(user_row)
-    user_col = int(input(" Please select column (1-9): "))
-    if user_col == 'exit':
-        return 'exit'
-    elif user_col == 'restart':
-        return 'restart'
-    else:
-        user_col = int(user_col)
-    user_num = int(input(" Please enter number (1-9): "))
-    if user_num == 'exit':
-        return 'exit'
-    elif user_num == 'restart':
-        return 'restart'
-    else:
-        user_num = int(user_num)
-
-    while not valid_number(user_row):
-        user_row = int(input(" Invalid choice of row, please try again: "))
-    while not valid_number(user_col):
-        user_col = int(input(" Invalid choice of column, please try again: "))
-    while not valid_number(user_num):
-        user_num = int(input(" Invalid choice of number, please try again: "))
-
-    return user_row - 1, user_col - 1, user_num
-
-
 @record_time
 def play_game(board):
     print("Type exit to return to menu at any point.")
