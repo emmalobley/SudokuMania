@@ -1,8 +1,8 @@
 from src.db.connect import _connect_to_db
-from src.sudoku_board import SudokuBoard, generate_new_board
-from src.user import get_user_move, get_difficulty
+from timedecorator import record_time
 
 
+@record_time
 def play_game(board):
     print("Type exit to return to menu at any point.")
 
