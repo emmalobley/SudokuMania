@@ -22,7 +22,8 @@ def play_game(board):
         user_move = get_user_move()
         if user_move == 'exit':
             # SAVE BOARD TO DATABASE
-            board.save_board('1')  # needs player_id as additional argument for now
+            board.save_board('1')  # needs player_id as additional argument for now (could be player_name?)
+            # save board should also take timestamp as arg - store to db needs updating
             print("Your game has been saved.")
             break
         elif user_move == 'restart':
@@ -38,7 +39,7 @@ def play_game(board):
     # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
     if solved:
         print("Well done!")
-        board.save_board('1')  # needs player_id as additional argument for now
+        board.save_board('1')  # takes player_id (or name?) as arg - should also take timestamp
 
 
 # This is a test board to test the continue game option.
@@ -70,18 +71,26 @@ def print_menu_options():
 
 def main():
     print("Welcome to sudoku!")
-    save_player("Jane")
+    name = "Jane"  # create function to get user name
+    save_player(name)
     wants_to_play = True
     while wants_to_play:
         print_menu_options()
         choice = int(input("Please choose a menu option by typing it's number: "))
         if choice == 1:
             new_board = generate_new_board(get_difficulty())
-            play_game(new_board)
+            # timer decorator returns time as string (hh:mm:ss)
+            time = play_game(new_board)
+            print(time)
         if choice == 2:
             print("Here is your previously saved game: ")
-            print(get_unfinished_board("Jane"))  # name placeholder
-            #     fetch most recent board from database here
+            # past_time =  # need to get previous time from db
+            # fetch most recent board from database here
+            print(get_unfinished_board(name))
+            # new_time = play_game(get_unfinished_board(name))  # need to format board from string after get from db
+            # print(new_time)
+            # need function to add the two timestamps - store total
+
             test_board = uncompletedBoard
             play_game(test_board)
         if choice == 3:
@@ -89,7 +98,7 @@ def main():
             print("This is where highscores will go.")
         if choice == 4:
             print("Thank you for playing!")
-            wants_to_play = False
+            wants_to_play = False  # python says want_to_play is not used? reassign and exit() not both needed?
             exit()
 
 

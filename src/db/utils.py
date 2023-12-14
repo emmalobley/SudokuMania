@@ -115,7 +115,6 @@ def get_unfinished_board(player_name):
     if not result:
         print("No unfinished puzzles for this user")
         return
-    print(result[-1])
     # returns most recent unfinished board for that user
     return result[-1]
 

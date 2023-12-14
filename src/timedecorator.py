@@ -7,8 +7,8 @@ def calc_time_taken(start_time, stop_time):
     time_taken = time.localtime(stop_time - start_time)
     time_diff = time.strftime("%H:%M:%S", time_taken)
     print(f"Time taken (hh:mm:ss): {time_diff}")
-    save_player_time(1, time_diff)
-
+    # save_player_time(1, time_diff)
+    return time_diff
 
 
 
