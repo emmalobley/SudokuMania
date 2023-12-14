@@ -1,7 +1,7 @@
 from timedecorator import record_time
 from user import get_user_move, get_difficulty
 from sudoku_board import SudokuBoard, generate_new_board
-from db.utils import get_unfinished_boards
+from db.utils import get_unfinished_boards, save_player
 from copy import deepcopy
 
 
@@ -36,9 +36,9 @@ def play_game(board):
                 print("You've made a mistake somewhere.")
     # STOP TIMER
     # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
-    board.save_board('1')  # needs player_id as additional argument for now
     if solved:
         print("Well done!")
+        board.save_board('1')  # needs player_id as additional argument for now
 
 
 # This is a test board to test the continue game option.
@@ -70,6 +70,7 @@ def print_menu_options():
 
 def main():
     print("Welcome to sudoku!")
+    save_player("Jane")
     wants_to_play = True
     while wants_to_play:
         print_menu_options()
