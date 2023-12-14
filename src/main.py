@@ -1,10 +1,11 @@
-from src.db.connect import _connect_to_db
 from timedecorator import record_time
 from user import get_user_move, get_difficulty
 from sudoku_board import SudokuBoard, generate_new_board
-from db.utils import get_board_from_db
+from db.utils import get_unfinished_boards
 from copy import deepcopy
 
+
+# function to play the game, wrapper records time before and after game is played and calcs time taken
 @record_time
 def play_game(board):
     print("Type exit to return to menu at any point.")
@@ -21,7 +22,7 @@ def play_game(board):
         user_move = get_user_move()
         if user_move == 'exit':
             # SAVE BOARD TO DATABASE
-            board.save_board()
+            board.save_board('1')  # needs player_id as additional argument for now
             print("Your game has been saved.")
             break
         elif user_move == 'restart':
@@ -35,6 +36,7 @@ def play_game(board):
                 print("You've made a mistake somewhere.")
     # STOP TIMER
     # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
+    board.save_board('1')  # needs player_id as additional argument for now
     if solved:
         print("Well done!")
 
@@ -52,7 +54,7 @@ uncompleted = [[0, 2, 1, 0, 9, 0, 5, 0, 0],
                [2, 0, 5, 9, 4, 0, 7, 0, 8]]
 uncompletedBoard = SudokuBoard(uncompleted, 'easy')
 
-
+# could this be within the print_menu_opt function?
 menu_options = {1: "New Game",
                 2: "Continue",
                 3: "View Highscores",
@@ -77,7 +79,7 @@ def main():
             play_game(new_board)
         if choice == 2:
             print("Here is your previously saved game: ")
-            print(get_board_from_db())
+            print(get_unfinished_boards("Jane"))  # name placeholder
             #     fetch most recent board from database here
             test_board = uncompletedBoard
             play_game(test_board)
@@ -98,7 +100,5 @@ if __name__ == "__main__":
 # functions to create
 
 # def store highscore/times/game history # database
-
-# def get_time_taken
 
 # def check_saved

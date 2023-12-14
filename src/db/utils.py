@@ -1,5 +1,4 @@
-from connect import _connect_to_db
-
+from src.db.connect import _connect_to_db
 
 class DbConnectionError(Exception):
     pass
@@ -27,6 +26,7 @@ def save_player(player_name):
     print("Player {} added to DB".format(player_name))
 
 
+# maybe change player_time table to also include the board difficult?
 def save_player_time(time):
     try:
         db_connection = _connect_to_db()
@@ -55,7 +55,8 @@ def save_to_boards_table(boards_data):
         cur = db_connection.cursor()
         print("Connected to DB: sudoku")
 
-        query = ("""INSERT INTO boards({}) VALUES({}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(
+        query = ("""INSERT INTO boards({}) VALUES
+                ({}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(
             ','.join(boards_data.keys()),
             boards_data['player_id'],
             boards_data['difficulty'],
@@ -83,29 +84,31 @@ def save_to_boards_table(boards_data):
             print("Db connection is closed")
 
 
-def get_board_from_db():
+def get_unfinished_boards(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
         print("Connected to DB: sudoku")
 
         # check this query in python:
-        query = """SELECT p.player_name, b.board_id, b.completed,
+        query = """SELECT p.player_name, 
                         b.row_1, b.row_2, b.row_3, b.row_4,
                         b.row_5, b.row_6, b.row_7, b.row_8, b.row_9
                 FROM player p INNER JOIN boards b ON p.player_id = b.player_id
-                WHERE b.completed = True"""
+                WHERE p.player_name = {} AND b.completed = false""".format(player_name)
 
-        cur.execute(query)
-        result = cur.fetchall()  # check is fetchall is correct or if it's fetchmany
+        try:
+            cur.execute(query)
+            result = cur.fetchall()  # check is fetchall is correct or if it's fetchmany
 
-        # to print each row on a new line:
-        for i in result:
-            print(i)
-            if i[2] == 1:
-                print("Board {} is completed!".format(i[1]))  # completed
-            else:
-                print("Board {} incomplete".format(i[1]))
+            # to print each row on a new line:
+            for i in result:
+                print(i)
+
+        except Exception:
+            print("No unfinished puzzles for this user")
+            result = 0
+
         cur.close()
 
     except Exception:
@@ -117,6 +120,7 @@ def get_board_from_db():
             print("Db connection is closed")
 
     return result
+
 
 if __name__ == '__main__':
     pass
