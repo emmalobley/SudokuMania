@@ -1,5 +1,5 @@
 from timedecorator import record_time
-from user import get_user_move, get_difficulty
+from user import get_user_move, get_difficulty, get_player_name
 from sudoku_board import SudokuBoard, generate_new_board, format_db_board
 from db.utils import get_unfinished_board, save_player
 from copy import deepcopy
@@ -71,7 +71,7 @@ def print_menu_options():
 
 def main():
     print("Welcome to sudoku!")
-    name = "Jane"  # create function to get user name
+    name = get_player_name()
     save_player(name)
     wants_to_play = True
     while wants_to_play:
@@ -96,7 +96,6 @@ def main():
             print("This is where highscores will go.")
         if choice == 4:
             print("Thank you for playing!")
-            wants_to_play = False  # python says want_to_play is not used? reassign and exit() not both needed?
             exit()
 
 

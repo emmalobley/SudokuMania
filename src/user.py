@@ -1,5 +1,12 @@
 from db.utils import save_player
 
+
+# gets player's name
+def get_player_name():
+    name = input("What is your name? ")
+    return name
+
+
 # get difficulty from user
 def get_difficulty():
     difficulty = input("Please select difficulty: ").lower()
