@@ -1,6 +1,6 @@
 from timedecorator import record_time
 from user import get_user_move, get_difficulty, get_player_name
-from sudoku_board import SudokuBoard, generate_new_board
+from sudoku_board import SudokuBoard, generate_new_board, format_db_board
 from db.utils import get_unfinished_board, save_player
 from copy import deepcopy
 
@@ -42,19 +42,6 @@ def play_game(board):
         board.save_board('1')  # takes player_id (or name?) as arg - should also take timestamp
 
 
-# This is a test board to test the continue game option.
-# Can be removed when connection to database is added.
-uncompleted = [[0, 2, 1, 0, 9, 0, 5, 0, 0],
-               [5, 7, 9, 0, 8, 4, 0, 2, 0],
-               [6, 8, 4, 3, 2, 5, 0, 7, 9],
-               [1, 4, 2, 0, 0, 9, 0, 0, 0],
-               [7, 9, 3, 5, 0, 8, 2, 4, 1],
-               [0, 5, 6, 4, 1, 2, 9, 0, 7],
-               [9, 6, 0, 2, 7, 0, 4, 5, 0],
-               [4, 1, 0, 0, 5, 3, 6, 9, 2],
-               [2, 0, 5, 9, 4, 0, 7, 0, 8]]
-uncompletedBoard = SudokuBoard(uncompleted, 'easy')
-
 # could this be within the print_menu_opt function?
 menu_options = {1: "New Game",
                 2: "Continue",
@@ -84,15 +71,11 @@ def main():
             print(time)
         if choice == 2:
             print("Here is your previously saved game: ")
-            # past_time =  # need to get previous time from db
-            # fetch most recent board from database here
-            print(get_unfinished_board(name))
-            # new_time = play_game(get_unfinished_board(name))  # need to format board from string after get from db
-            # print(new_time)
+            (old_time, continue_board) = format_db_board(get_unfinished_board(name))
+            new_time = play_game(continue_board)
+            print(new_time)
             # need function to add the two timestamps - store total
 
-            test_board = uncompletedBoard
-            play_game(test_board)
         if choice == 3:
             #     find highscores in database and print them here
             print("This is where highscores will go.")
