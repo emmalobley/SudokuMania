@@ -119,6 +119,56 @@ def get_unfinished_board(player_name):
     return result[-1]
 
 
-# if __name__ == '__main__':
-#     get_unfinished_board("Jane")
-#     pass
+def return_timestamp(player_name):
+    try:
+        db_connection = _connect_to_db()
+        cur = db_connection.cursor()
+        print("Connected to DB: sudoku")
+
+        query = """SELECT 
+                        p.player_name, 
+                        b.total_time
+                    FROM player p 
+                    INNER JOIN boards b ON p.player_id = b.player_id 
+                    WHERE p.player_name = '{}' AND b.completed = False""".format(player_name)
+        cur.execute(query)
+        result = cur.fetchone()
+
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("Db connection is closed")
+
+    if not result:
+        print("No previous timestamps for this user")
+
+
+def return_difficulty(player_name):
+    try:
+        db_connection = _connect_to_db()
+        cur = db_connection.cursor()
+        print("Connected to DB: sudoku")
+
+        query = """SELECT 
+                        p.player_name, 
+                        b.difficulty
+                    FROM player p 
+                    INNER JOIN boards b ON p.player_id = b.player_id 
+                    WHERE p.player_name = '{}' AND b.completed = False""".format(player_name)
+        cur.execute(query)
+        result = cur.fetchone()
+
+    except Exception:
+        raise DbConnectionError("Failed to read data from DB")
+
+    finally:
+        if db_connection:
+            db_connection.close()
+            print("Db connection is closed")
+
+    if not result:
+        print("No previous board difficulties chosen by this user")
+
