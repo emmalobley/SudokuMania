@@ -120,5 +120,4 @@ def get_unfinished_board(player_name):
 
 
 if __name__ == '__main__':
-    get_unfinished_board("Jane")
     pass

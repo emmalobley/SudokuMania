@@ -42,19 +42,6 @@ def play_game(board):
         board.save_board('1')  # takes player_id (or name?) as arg - should also take timestamp
 
 
-# This is a test board to test the continue game option.
-# Can be removed when connection to database is added.
-uncompleted = [[0, 2, 1, 0, 9, 0, 5, 0, 0],
-               [5, 7, 9, 0, 8, 4, 0, 2, 0],
-               [6, 8, 4, 3, 2, 5, 0, 7, 9],
-               [1, 4, 2, 0, 0, 9, 0, 0, 0],
-               [7, 9, 3, 5, 0, 8, 2, 4, 1],
-               [0, 5, 6, 4, 1, 2, 9, 0, 7],
-               [9, 6, 0, 2, 7, 0, 4, 5, 0],
-               [4, 1, 0, 0, 5, 3, 6, 9, 2],
-               [2, 0, 5, 9, 4, 0, 7, 0, 8]]
-uncompletedBoard = SudokuBoard(uncompleted, 'easy')
-
 # could this be within the print_menu_opt function?
 menu_options = {1: "New Game",
                 2: "Continue",
@@ -89,8 +76,6 @@ def main():
             print(new_time)
             # need function to add the two timestamps - store total
 
-            test_board = uncompletedBoard
-            play_game(test_board)
         if choice == 3:
             #     find highscores in database and print them here
             print("This is where highscores will go.")
