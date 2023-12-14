@@ -1,6 +1,6 @@
 from timedecorator import record_time
 from user import get_user_move, get_difficulty
-from sudoku_board import SudokuBoard, generate_new_board
+from sudoku_board import SudokuBoard, generate_new_board, format_db_board
 from db.utils import get_unfinished_board, save_player
 from copy import deepcopy
 
@@ -84,11 +84,9 @@ def main():
             print(time)
         if choice == 2:
             print("Here is your previously saved game: ")
-            # past_time =  # need to get previous time from db
-            # fetch most recent board from database here
-            print(get_unfinished_board(name))
-            # new_time = play_game(get_unfinished_board(name))  # need to format board from string after get from db
-            # print(new_time)
+            (old_time, continue_board) = format_db_board(get_unfinished_board(name))
+            new_time = play_game(continue_board)
+            print(new_time)
             # need function to add the two timestamps - store total
 
             test_board = uncompletedBoard

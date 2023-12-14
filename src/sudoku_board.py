@@ -81,7 +81,7 @@ class SudokuBoard:
         boards_data = {
             "player_id": player_id,
             "difficulty": self.difficulty,
-            "completed": int(self.check_completed()) # need in form as int for sql
+            "completed": int(self.check_completed())  # need in form as int for sql
             }
         for i, line in enumerate(self.board):
             boards_data["row_{}".format(i + 1)] = ''.join(map(str, line))
@@ -104,3 +104,21 @@ def generate_new_board(difficulty):
     new_board = SudokuBoard(board, difficulty)
     print(f'    Difficulty = {difficulty.title()}')
     return new_board
+
+
+# takes tuple with difficulty, time and 9 strings of 9 digits as arg and converts to correct format
+def format_db_board(db_board):
+    board = []
+    difficulty = db_board[0]
+    time = db_board[1]
+    db_board = db_board[2:]
+    for line in db_board:
+        board.append(list(map(int, line)))
+    return time, SudokuBoard(board, difficulty)
+
+
+old_board = ('Easy', '00:23:11', '915678234', '743219568', '800054790', '109542680', '600793045', '050086009', '301467800', '580921470', '204805900')
+
+old_time, continue_board = format_db_board(old_board)
+print(old_time)
+print(continue_board)
