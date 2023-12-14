@@ -1,4 +1,5 @@
 import requests
+from db.utils import save_to_boards_table
 
 
 class SudokuBoard:
@@ -76,11 +77,11 @@ class SudokuBoard:
                     return False
         return True
 
-    def save_board(self):
+    def save_board(self, player_id):
         boards_data = {
-            "player_id": self.player_id,
+            "player_id": player_id,
             "difficulty": self.difficulty,
-            "completed": self.check_completed()
+            "completed": int(self.check_completed()) # need in form as int for sql
             }
         for i, line in enumerate(self.board):
             boards_data["row_{}".format(i + 1)] = ''.join(map(str, line))

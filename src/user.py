@@ -1,3 +1,5 @@
+from db.utils import save_player
+
 # get difficulty from user
 def get_difficulty():
     difficulty = input("Please select difficulty: ").lower()
@@ -47,3 +49,6 @@ def get_user_move():
 # check user choice of number valid
 def valid_number(number):
     return number in {1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+
+# function to get user name - savew to db using save_player(player_name)
