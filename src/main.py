@@ -1,7 +1,7 @@
 from timedecorator import record_time
 from user import get_user_move, get_difficulty
 from sudoku_board import SudokuBoard, generate_new_board
-from db.utils import get_unfinished_boards, save_player
+from db.utils import get_unfinished_board, save_player
 from copy import deepcopy
 
 
@@ -80,7 +80,7 @@ def main():
             play_game(new_board)
         if choice == 2:
             print("Here is your previously saved game: ")
-            print(get_unfinished_boards("Jane"))  # name placeholder
+            print(get_unfinished_board("Jane"))  # name placeholder
             #     fetch most recent board from database here
             test_board = uncompletedBoard
             play_game(test_board)

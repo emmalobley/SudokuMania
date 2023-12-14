@@ -85,14 +85,14 @@ def save_to_boards_table(boards_data):
             print("Db connection is closed")
 
 
-def get_unfinished_boards(player_name):
+def get_unfinished_board(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
         print("Connected to DB: sudoku")
 
         # check this query in python:
-        query = """SELECT p.player_name, 
+        query = """SELECT  
                         b.row_1, b.row_2, b.row_3, b.row_4,
                         b.row_5, b.row_6, b.row_7, b.row_8, b.row_9
                 FROM player p INNER JOIN boards b ON p.player_id = b.player_id
@@ -101,13 +101,6 @@ def get_unfinished_boards(player_name):
 
         cur.execute(query)
         result = cur.fetchall()  # check is fetchall is correct or if it's fetchmany
-
-        # to print each row on a new line:
-        for i in result:
-            print(i)
-
-        if not result:
-            print("No unfinished puzzles for this user")
 
         cur.close()
 
@@ -119,8 +112,14 @@ def get_unfinished_boards(player_name):
             db_connection.close()
             print("Db connection is closed")
 
-    return result
+    if not result:
+        print("No unfinished puzzles for this user")
+        return
+    print(result[-1])
+    # returns most recent unfinished board for that user
+    return result[-1]
 
 
 if __name__ == '__main__':
+    get_unfinished_board("Jane")
     pass
