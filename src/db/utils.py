@@ -92,7 +92,7 @@ def get_unfinished_board(player_name):
         print("Connected to DB: sudoku")
 
         # check this query in python:
-        query = """SELECT  b.difficulty, b.total_time
+        query = """SELECT  b.difficulty, b.total_time,
                         b.row_1, b.row_2, b.row_3, b.row_4,
                         b.row_5, b.row_6, b.row_7, b.row_8, b.row_9
                 FROM player p INNER JOIN boards b ON p.player_id = b.player_id
