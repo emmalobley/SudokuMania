@@ -24,7 +24,7 @@ def play_game(board, player_id):
             else:
                 print("You have made a mistake somewhere.")
         else:
-            print("Type exit to save your game an exit to the main menu.")
+            print("Type exit to save your game and exit to the main menu.")
             print("Type restart to restart the game.")
             print("Type continue to continue playing the game.")
             choice = input("")
