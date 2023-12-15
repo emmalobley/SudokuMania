@@ -42,14 +42,12 @@ def play_game(board):
         board.save_board('1')  # takes player_id (or name?) as arg - should also take timestamp
 
 
-# could this be within the print_menu_opt function?
-menu_options = {1: "New Game",
-                2: "Continue",
-                3: "View Highscores",
-                4: "Exit"}
-
 
 def print_menu_options():
+    menu_options = {1: "New Game",
+                    2: "Continue",
+                    3: "View Highscores",
+                    4: "Exit"}
     for i in range(4):
         print(str(i + 1) + ": " + menu_options[i + 1])
 

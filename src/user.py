@@ -22,24 +22,18 @@ def valid_difficulty(difficulty):
 
 def get_user_move():
     user_row = input(" Please select row (1-9): ")
-    if user_row == 'exit':
-        return 'exit'
-    elif user_row == 'restart':
-        return 'restart'
+    if user_row == 'pause':
+        return 'pause'
     else:
         user_row = int(user_row)
     user_col = int(input(" Please select column (1-9): "))
-    if user_col == 'exit':
-        return 'exit'
-    elif user_col == 'restart':
-        return 'restart'
+    if user_col == 'pause':
+        return 'pause'
     else:
         user_col = int(user_col)
     user_num = int(input(" Please enter number (1-9): "))
-    if user_num == 'exit':
-        return 'exit'
-    elif user_num == 'restart':
-        return 'restart'
+    if user_num == 'pause':
+        return 'pause'
     else:
         user_num = int(user_num)
 
