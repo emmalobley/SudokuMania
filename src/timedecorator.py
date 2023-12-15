@@ -1,12 +1,27 @@
 from db.utils import save_player_time
 import time
 
-# calculate the time taken and convert to readable format
 
+# calculate the time taken and convert to readable format
 def calc_time_taken(start_time, stop_time):
-    time_taken = time.localtime(stop_time - start_time)
-    time_diff = time.strftime("%H:%M:%S", time_taken)
-    print(f"Time taken (hh:mm:ss): {time_diff}")
+    # time_diff is the time taken in seconds
+    time_diff = stop_time - start_time
+
+    # the following is code that prints time_diff in a readable format
+    hh = str(int(time_diff // 3600))
+    remaining_seconds = time_diff % 3600
+    mm = str(int(remaining_seconds // 60))
+    ss = str(int(remaining_seconds % 60))
+
+    if len(hh) == 1:
+        hh = "0" + hh
+    if len(mm) == 1:
+        mm = "0" + mm
+    if len(ss) == 1:
+        ss = "0" + ss
+
+    print(f"Time taken (hh:mm:ss): {hh}:{mm}:{ss}")
+
     # save_player_time(1, time_diff)
     return time_diff
 
@@ -29,15 +44,15 @@ def record_time(func):
 
 # functions below to simulate the game getting timed for testing
 
-# @record_time
-# def mock_game():
-#     print("start")
-#
-#     time.sleep(6)  # insert time in seconds here to test
-#
-#     print("stop")
-#
-# mock_game()
+@record_time
+def mock_game():
+    print("start")
+
+    time.sleep(6)  # insert time in seconds here to test
+
+    print("stop")
+
+mock_game()
 
 
 # testtime in seconds # 3600 = 1hr # 5400 = 1h30m # 7200 = 2h
