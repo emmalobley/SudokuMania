@@ -1,5 +1,5 @@
 import requests
-from db.utils import save_to_boards_table
+from db.utils import save_board_to_db
 
 
 class SudokuBoard:
@@ -77,15 +77,16 @@ class SudokuBoard:
                     return False
         return True
 
-    def save_board(self, player_id):
+    def save_board(self, player_id, time):
         boards_data = {
             "player_id": player_id,
             "difficulty": self.difficulty,
-            "completed": int(self.check_completed())  # need in form as int for sql
+            "completed": int(self.check_completed()),  # need in form as int for sql
+            "total_time": time
             }
         for i, line in enumerate(self.board):
             boards_data["row_{}".format(i + 1)] = ''.join(map(str, line))
-        save_to_boards_table(boards_data)
+        save_board_to_db(boards_data)
 
 # boolean function, validate if sudoku is completed
 # def completed_sudoku(board):
