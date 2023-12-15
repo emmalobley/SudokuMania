@@ -54,6 +54,20 @@ def print_menu_options():
         print(str(i + 1) + ": " + menu_options[i + 1])
 
 
+# get choice from user - handles exception
+def get_choice():
+    while True:
+        try:
+            choice = int(input("Please choose a menu option by typing it's number: "))
+            while choice not in [1, 2, 3, 4]:
+                choice = int(input("Invalid, try again."))
+
+            break
+        except ValueError:
+            print("Invalid, try again.")
+    return choice
+
+
 # ~~~~~~~~~~~ main game loop ~~~~~~~~~~~~~~~~~~
 
 def main():
@@ -63,17 +77,20 @@ def main():
     wants_to_play = True
     while wants_to_play:
         print_menu_options()
-        choice = int(input("Please choose a menu option by typing it's number: "))
+        choice = get_choice()
         if choice == 1:
             new_board = generate_new_board(get_difficulty())
             # timer decorator returns time as string (hh:mm:ss)
             time = play_game(new_board)
             print(time)
         if choice == 2:
-            print("Here is your previously saved game: ")
-            (old_time, continue_board) = format_db_board(get_unfinished_board(name))
-            new_time = play_game(continue_board)
-            print(new_time)
+            try:
+                (old_time, continue_board) = format_db_board(get_unfinished_board(name))
+                print("Here is your previously saved game: ")
+                new_time = play_game(continue_board)
+                print(new_time)
+            except TypeError:
+                print("No unfinished puzzles for this user")
             # need function to add the two timestamps - store total
 
         if choice == 3:
