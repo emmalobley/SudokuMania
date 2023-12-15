@@ -1,84 +1,70 @@
-# CFG-Final-Project
-Final project for the CFGDegree
+# SudokuMania!
 
-# Initial Ideas 💡
+SudokuMania is Team 2's final project for the CFGDegree!
 
-We started out by brainstorming what we all enjoyed and discussed making some sort of puzzle game.🧩 We found an API which generates sudoku grids and solutions of varying difficulty.
+Completed in Python using MySQL for database creation and connection.
 
-Upon reviewing the API we discussed user interaction to select sudoku difficulty and the option of having a running timer.⏱️
+Test your sudoku skills by running this app! 👾👾👾
 
-This API generates sudoku boards of varying difficulty
+## Project Description
+
+
+### API use 💡
+
+This project uses an existing API which generates sudoku boards of varying difficulty.
+
 This API is free and does not require any authentication!
 
-You can retrieve sudoku from urls
-
+You can retrieve sudoku from this 
 [Sudoku API web link](https://sudoku-game-and-api.netlify.app)
 
-[Sudoku API](https://sudoku-game-and-api.netlify.app/api/sudoku)
+### Database connection 🔢
+
+We use a MySQL connector to access and store data to a database called sudoku.
+The available code to create the database is stored in sql_code.sql file of this project.
+Information on how to set up the database is included in the user instructions section of this file.
+
+### Use of classes
+
+This project creates objects of the class SudokuBoard.
+
+### User interaction
+
+When running this program the user is asked to input their name, which is stored to a players table in the database and allows the database to later store and retrieve relevant boards played by the user.
+
+The user will then be asked to select from a list of available options:
+1. Start a new game
+2. Continue an existing game
+3. View Highscores
+4. Exit the program
+
+These options will remain available until the user wishes to exit the program.
+
+If the user chooses option 1 the program will make a call to the API and generate a new board.
+The board is then converted to a readable format and the user is able to play the game -
+i.e. can select number they wish to enter into a given row or column. Each play of a game is timed stored to the database.
+
+If the user wishes to continue an existing game the program will return the most recent uncompleted game for that user
+and the user is able to play the game as previous. The new time will get added to the old time for the game.
+
+If the user wishes to view highscores the program will return all difficulties and times from the database and present
+to the user as a scoreboard with relevant scoring based on difficulty and play time. 
 
 
-# What we are building 👩‍💻
+## User instructions 👩‍💻
 
-We are building an app to play the game sudoku on.👾
+To run the program the user must first create the database in mysql by running the commands written in the file sql_code.sql.
 
-# What it does 🧐
+The user must then allow a connection by updating the ‘HOST’, ‘USER’ and ‘PASSWORD’ values in the file config.py to the relevant values (username and password as set during MySQL installation).
 
-| Allows the user to play a game of sudoku, where they can choose the difficulty. 🙋🏼‍♀️| Uses an existing API to generate a sudoku board. ▶️| 
-| :-------- | :------- | 
-| Stores info to a DB: the uncompleted and completed sudoku, the timestamps for completion of the sudoku and the difficulty of the sudoku. ℹ️| The user can request to see their highscores for each difficulty. 📊| 
+If the user has not previously installed the mysql-connector then they must also run it in their terminal:
 
+```bash
+-m pip install mysql-connector-python 
+```
 
-# Key Features of System 🌟
-1. Menu to choose options between start a new game, continue a game, see highscores or quit.
+Upon completion of these prerequisites, the user will be able to accurately and easily run the main.py file within their Python environment by pressing run.
 
-2. When starting a new game, the system asks the user for their choice of difficulty and generates a board of the desired difficulty.
-
-3. The user can then add numbers🔢 to the sudoku board. They cannot change numbers that are already given, but can change their inputted numbers.
-
-4. After completing the sudoku, the system checks that the solution is correct✅, i.e that there are unique numbers in each row, column and box. The system also times how long it takes for the user to complete the sudoku.
-
-5. The user has the option to restart the sudoku which would remove all their answers and leave the starting numbers. The restart starts the timer again.
-
-6. If there is a mistake with the sudoku in the final check the system alerts the user that the sudoku has a mistake🚨.
-
-7. Throughout the game the user has the option to save their uncompleted sudoku game to the database where they can then continue at a later time, in this case the time pauses⏸️.
-
-8. If the user chooses to continue and if there is a saved game currently in the database they can continue playing that game and their time starts again.
-
-9. User can request to see their highscores😎 for each difficulty.
-
-    
-
-
-
-# Team approach to project work 👏🏻
-- [workload distribution]
-1. 📆 Meeting twice weekly on Wednesdays and Sundays with set goals determined at each meet. Tasks assigned on Trello board.
-
-2. Build the database to be able to store difficulty, time and uncompleted and completed boards and the user name.
-   
-2.1 In python add the api calls to the api that can request the sudoku with the desired difficulty.
-2.2 In python create the functions that can allow the user to add numbers to the sudoku.
-2.3 In python create a function that can check whether a solution is correct.
-2.4 In python add a timer function to the sudoku that ends when the sudoku has been filled and passes the correct check.
-
-
-
-  
-- [managing code]
-Using GitHub we will each create a new branch when we want to add a new feature or a chore. When the code is finished we create a pull request and it requires at least one person to review before it can be merged to the main branch.
-
-
-
-
-- [testing system]
-In the project we will have at least one folder where we will keep unit tests🧪. As we write the code we will add unit tests and test the functionality of the code.
-After we have created the system we will run user tests to check that the system works for the user and has all the functionality that we aimed to have. 👍🏻
-
-
-
-
-
-
+Doing so will stimulate the beginning actions as described in the user interactions.
 
 
