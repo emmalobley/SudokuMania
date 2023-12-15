@@ -21,34 +21,41 @@ def valid_difficulty(difficulty):
 
 
 def get_user_move():
-    user_row = input(" Please select row (1-9): ")
-    if user_row == 'exit':
-        return 'exit'
-    elif user_row == 'restart':
-        return 'restart'
-    else:
-        user_row = int(user_row)
-    user_col = int(input(" Please select column (1-9): "))
-    if user_col == 'exit':
-        return 'exit'
-    elif user_col == 'restart':
-        return 'restart'
-    else:
-        user_col = int(user_col)
-    user_num = int(input(" Please enter number (1-9): "))
-    if user_num == 'exit':
-        return 'exit'
-    elif user_num == 'restart':
-        return 'restart'
-    else:
-        user_num = int(user_num)
-
+    user_row = ""
+    user_col = ""
+    user_num = ""
     while not valid_number(user_row):
-        user_row = int(input(" Invalid choice of row, please try again: "))
+        try:
+            user_row = input(" Please select row (1-9): ")
+            if user_row == 'pause':
+                return 'exit'
+            else:
+                user_row = int(user_row)
+
+        except (ValueError, TypeError):
+            print("Invalid. Try again.")
+
     while not valid_number(user_col):
-        user_col = int(input(" Invalid choice of column, please try again: "))
+        try:
+            user_col = input(" Please select column (1-9): ")
+            if user_col == 'pause':
+                return 'exit'
+            else:
+                user_col = int(user_col)
+
+        except (ValueError, TypeError):
+            print("Invalid. Try again.")
+
     while not valid_number(user_num):
-        user_num = int(input(" Invalid choice of number, please try again: "))
+        try:
+            user_num = input(" Please enter number (1-9): ")
+            if user_num == 'pause':
+                return 'exit'
+            else:
+                user_num = int(user_num)
+
+        except (ValueError, TypeError):
+            print("Invalid. Try again.")
 
     return user_row - 1, user_col - 1, user_num
 
