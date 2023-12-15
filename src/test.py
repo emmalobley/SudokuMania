@@ -6,58 +6,10 @@ from db.utils import get_unfinished_board, save_player
 from copy import deepcopy
 
 
-
-player = 'Helena'
-message = """
-hello {}""".format(player)
-
-# print(message)
-
-@record_time
-def add( a, b):
-    return a + b
-
-# print(add(10, 5))
-
-
-########################################################################
-
-# @record_time
-# def play_game(board):
-#     print("Type exit to return to menu at any point.")
-#     print("Type restart to clear the board.")
-#     restart_board = deepcopy(board)
-#
-#     solved = False
-#     completed = board.check_completed()
-#     if completed:
-#         solved = board.check_solution()
-#
-#     while not solved:
-#         print(board.format_board())
-#         user_move = get_user_move()
-#         if user_move == 'exit':
-#             # SAVE BOARD TO DATABASE
-#             board.save_board('1')  # needs player_id as additional argument for now (could be player_name?)
-#             # save board should also take timestamp as arg - store to db needs updating
-#             print("Your game has been saved.")
-#             break
-#         elif user_move == 'restart':
-#             play_game(restart_board)
-#             break
-#         board.update_board(user_move[0], user_move[1], user_move[2])
-#         completed = board.check_completed()
-#         if completed:
-#             solved = board.check_solution()
-#             if not solved:
-#                 print("You've made a mistake somewhere.")
-#     # STOP TIMER
-#     # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
-#     if solved:
-#         print("Well done!")
-#         board.save_board('1')  # takes player_id (or name?) as arg - should also take timestamp
-
-########################################################################
+#######################################################
+# This is a test file for the main game loop.
+# currently the save functions and timings don't work but the main loop runs well with the new pause, continue and
+# restart functions
 
 def play_game(board):
 
@@ -108,6 +60,10 @@ def sudoku_game_loop(board):
             solved = board.check_solution()
             if not solved:
                 print("You've made a mistake somewhere.")
+
+#######################################################
+# TESTING:
+
 
 uncompleted = [[0, 2, 1, 0, 9, 0, 5, 0, 0],
                [5, 7, 9, 0, 8, 4, 0, 2, 0],
