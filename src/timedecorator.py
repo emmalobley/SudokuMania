@@ -26,20 +26,18 @@ def calc_time_taken(start_time, stop_time):
     return time_diff
 
 
-
 # decorator to record the time before and after running the game
 # time.time to get the current time as a float
 # to be called when play_game is ran
 def record_time(func):
     def wrapper(*args, **kwargs):
-
         start_time = time.time()
         func(*args, **kwargs)
         stop_time = time.time()
 
         return calc_time_taken(start_time, stop_time)
-    return wrapper
 
+    return wrapper
 
 
 # functions below to simulate the game getting timed for testing
@@ -52,7 +50,6 @@ def mock_game():
 
     print("stop")
 
-mock_game()
 
 
 # testtime in seconds # 3600 = 1hr # 5400 = 1h30m # 7200 = 2h
@@ -67,4 +64,3 @@ mock_game()
 #
 # formatted_timeTest = f"{hoursTest:02}:{minutesTest:02}:{secondsTest:02}"
 # print(f"(test) Time taken (hh:mm:ss): {formatted_timeTest} (test)")
-
