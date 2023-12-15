@@ -5,41 +5,6 @@ from db.utils import get_unfinished_board, save_player, get_player_id
 from copy import deepcopy
 
 
-# function to play the game, wrapper records time before and after game is played and calcs time taken
-# @record_time
-# def play_game(board, player_id):
-#     print("Type exit to return to menu at any point.")
-#     print("Type restart to clear the board.")
-#     restart_board = deepcopy(board)
-#
-#     solved = False
-#     completed = board.check_completed()
-#     if completed:
-#         solved = board.check_solution()
-#
-#     while not solved:
-#         print(board.format_board())
-#         user_move = get_user_move()
-#         if user_move == 'exit':
-#             # SAVE BOARD TO DATABASE
-#             board.save_board(player_id)  # needs player_id to save board
-#             # save board should also take timestamp as arg - store to db needs updating
-#             print("Your game has been saved.")
-#             break
-#         elif user_move == 'restart':
-#             play_game(restart_board)
-#             break
-#         board.update_board(user_move[0], user_move[1], user_move[2])
-#         completed = board.check_completed()
-#         if completed:
-#             solved = board.check_solution()
-#             if not solved:
-#                 print("You've made a mistake somewhere.")
-#     # STOP TIMER
-#     # SAVE TIME, DIFFICULTY AND BOARD TO DATABASE
-#     if solved:
-#         print("Well done!")
-#         board.save_board(player_id)  # takes player_id as arg - should also take timestamp
 def play_game(board, player_id):
 
     restart_board = deepcopy(board)
