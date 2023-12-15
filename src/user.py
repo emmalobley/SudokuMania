@@ -1,5 +1,6 @@
 from db.utils import save_player, get_score_info
-
+from timedecorator import convert_hhmmss_to_seconds
+import datetime
 
 # gets player's name
 def get_player_name():
@@ -86,8 +87,7 @@ def pretty_scoreboard(func):
 # function to get user  - present relevant info in scoreboard
 @pretty_scoreboard
 def get_user_score(player_name):
-    # player_scores = get_score_info(player_name)
-    scores = [('hard', 1202), ('easy', 322)]  # from db in this form?
+    scores = get_score_info(player_name)
     for item in scores:
         score = 1800 - item[1]  # 30 minutes minus time taken
         # if over 30 minutes then score zero
@@ -105,5 +105,3 @@ def get_user_score(player_name):
 
     return ""
 
-
-get_user_score("Jane")

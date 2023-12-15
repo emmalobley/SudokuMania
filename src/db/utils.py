@@ -9,7 +9,6 @@ def save_player(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
-        print("Saving player to DB: sudoku")
 
         query = """INSERT INTO player({}) VALUES('{}')""".format("Player_name", player_name)
         cur.execute(query)
@@ -22,7 +21,6 @@ def save_player(player_name):
     finally:
         if db_connection:
             db_connection.close()
-            print("Db connection is closed")
 
     print("Player {} added to DB".format(player_name))
 
@@ -31,7 +29,6 @@ def get_player_id(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
-        print("Connected to DB: sudoku")
 
         # check this query in python:
         query = """SELECT  p.player_id
@@ -49,7 +46,6 @@ def get_player_id(player_name):
     finally:
         if db_connection:
             db_connection.close()
-            print("Db connection is closed")
 
     if not result:
         print("This user does not exist")
@@ -92,17 +88,15 @@ def save_board_to_db(boards_data):
     finally:
         if db_connection:
             db_connection.close()
-            print("Db connection is closed")
 
 
 def get_unfinished_board(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
-        print("Connected to DB: sudoku")
 
         # check this query in python:
-        query = """SELECT  b.difficulty, b.total_time,
+        query = """SELECT  b.difficulty, TIME_TO_SEC(b.total_time),
                         b.row_1, b.row_2, b.row_3, b.row_4,
                         b.row_5, b.row_6, b.row_7, b.row_8, b.row_9
                 FROM player p INNER JOIN boards b ON p.player_id = b.player_id
@@ -119,7 +113,6 @@ def get_unfinished_board(player_name):
     finally:
         if db_connection:
             db_connection.close()
-            print("Db connection is closed")
 
     if not result:
         # no unfinished puzzles
@@ -133,13 +126,17 @@ def get_score_info(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
-        print("Connected to DB: sudoku")
 
         # check this query in python:
-        query = """SELECT  b.difficulty, b.total_time
+        query = """SELECT  b.difficulty, TIME_TO_SEC(b.total_time)
                 FROM boards b INNER JOIN player p ON b.player_id = p.player_id
                 WHERE p.player_name = '{}' AND b.completed = True
-                 ORDER BY difficulty, total_time""".format(player_name)
+                 ORDER BY 
+                 CASE difficulty
+                 WHEN 'easy' THEN 1
+                  WHEN 'medium' THEN 2
+                   WHEN 'hard' THEN 3
+                    END, total_time""".format(player_name)
 
         cur.execute(query)
         result = cur.fetchall()  # check is fetchall is correct or if it's fetchmany
@@ -152,7 +149,6 @@ def get_score_info(player_name):
     finally:
         if db_connection:
             db_connection.close()
-            print("Db connection is closed")
 
     if not result:
         print("No completed puzzles for this user")

@@ -42,6 +42,7 @@ def convert_secs_to_hhmmss(seconds: int):
 
     return f'{hh}:{mm}:{ss}'
 
+
 def convert_hhmmss_to_seconds(hhmmss):
     hh, mm, ss = hhmmss.split(':')
     seconds = int(hh) * 3600 + int(mm) * 60 + int(ss)
