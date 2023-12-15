@@ -26,6 +26,7 @@ def record_time(func):
 
     return wrapper
 
+
 def convert_secs_to_hhmmss(seconds: int):
     hh = str(int(seconds // 3600))
     remaining_seconds = seconds % 3600

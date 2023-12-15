@@ -1,8 +1,8 @@
 from src.timedecorator import record_time
-from timedecorator import record_time
+from timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
 from user import get_user_move, get_difficulty, get_player_name
 from sudoku_board import SudokuBoard, generate_new_board, format_db_board
-from db.utils import get_unfinished_board, save_player
+from db.utils import get_unfinished_board, save_player, get_player_id
 from copy import deepcopy
 
 
@@ -11,7 +11,7 @@ from copy import deepcopy
 # currently the save functions and timings don't work but the main loop runs well with the new pause, continue and
 # restart functions
 
-def play_game(board):
+def play_game(board, player_id):
 
     restart_board = deepcopy(board)
     total_time = 0  # <-- THIS NEEDS TO FIND THE CURRENT TIME IF THE SUDOKU IS LISTED IN THE DATABASE
@@ -19,12 +19,13 @@ def play_game(board):
         # run the sudoku game loop, this breaks either when the game is solved or if the user types pause
         time_taken_seconds = sudoku_game_loop(board)
         total_time += time_taken_seconds
+        formatted_time = convert_secs_to_hhmmss(total_time)
 
         if board.check_completed():
             solved = board.check_solution()
             if solved:
                 print("Well done!")
-                board.save_board('1', total_time)
+                board.save_board(player_id, formatted_time)
                 return
             else:
                 print("You have made a mistake somewhere.")
@@ -34,10 +35,11 @@ def play_game(board):
             print("Type continue to continue playing the game.")
             choice = input("")
             if choice == 'exit':
-                board.save_board('1', total_time)
+                board.save_board(player_id, formatted_time)
                 return
             elif choice == 'restart':
                 board = deepcopy(restart_board)
+    return formatted_time
 
 
 
