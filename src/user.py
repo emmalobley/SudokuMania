@@ -1,4 +1,4 @@
-from db.utils import save_player
+from db.utils import save_player, get_score_info
 
 
 # gets player's name
@@ -65,4 +65,45 @@ def valid_number(number):
     return number in {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
-# function to get user name - savew to db using save_player(player_name)
+
+# wrapper for scoreboard
+def pretty_scoreboard(func):
+    def wrapper(*args, **kwargs):
+
+        print("*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+        print("       SCOREBOARD:         ")
+        print("---------------------------")
+        print(" Difficulty | Time | Score ")
+        print("---------------------------")
+        print(func(*args, **kwargs))
+        print("---------------------------")
+        print("*-*-*-*-*-*-*-*-*-*-*-*-*-*")
+
+        return
+
+    return wrapper
+
+# function to get user  - present relevant info in scoreboard
+@pretty_scoreboard
+def get_user_score(player_name):
+    # player_scores = get_score_info(player_name)
+    scores = [('hard', 1202), ('easy', 322)]  # from db in this form?
+    for item in scores:
+        score = 1800 - item[1]  # 30 minutes minus time taken
+        # if over 30 minutes then score zero
+        if score < 0:
+            score = 0
+
+        if item[0] == "easy":
+            score = score + 100
+        elif item[0] == "medium":
+            score = score + 300
+        elif item[0] == "hard":
+            score = score + 500
+
+        print("   ", item[0].title(), "|", str(item[1]), "|", str(score), "   ")
+
+    return ""
+
+
+get_user_score("Jane")
