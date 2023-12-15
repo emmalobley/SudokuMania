@@ -28,7 +28,7 @@ def get_user_move():
         try:
             user_row = input(" Please select row (1-9): ")
             if user_row == 'pause':
-                return 'exit'
+                return 'pause'
             else:
                 user_row = int(user_row)
 
@@ -39,7 +39,7 @@ def get_user_move():
         try:
             user_col = input(" Please select column (1-9): ")
             if user_col == 'pause':
-                return 'exit'
+                return 'pause'
             else:
                 user_col = int(user_col)
 
@@ -50,7 +50,7 @@ def get_user_move():
         try:
             user_num = input(" Please enter number (1-9): ")
             if user_num == 'pause':
-                return 'exit'
+                return 'pause'
             else:
                 user_num = int(user_num)
 

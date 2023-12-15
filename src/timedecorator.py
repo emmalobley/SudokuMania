@@ -1,4 +1,3 @@
-from db.utils import save_player_time
 import time
 
 
@@ -8,21 +7,9 @@ def calc_time_taken(start_time, stop_time):
     time_diff = stop_time - start_time
 
     # the following is code that prints time_diff in a readable format
-    hh = str(int(time_diff // 3600))
-    remaining_seconds = time_diff % 3600
-    mm = str(int(remaining_seconds // 60))
-    ss = str(int(remaining_seconds % 60))
+    time_taken = convert_secs_to_hhmmss(time_diff)
+    print(f"Time taken (hh:mm:ss): {time_taken}")
 
-    if len(hh) == 1:
-        hh = "0" + hh
-    if len(mm) == 1:
-        mm = "0" + mm
-    if len(ss) == 1:
-        ss = "0" + ss
-
-    print(f"Time taken (hh:mm:ss): {hh}:{mm}:{ss}")
-
-    # save_player_time(1, time_diff)
     return time_diff
 
 
@@ -40,8 +27,28 @@ def record_time(func):
     return wrapper
 
 
-# functions below to simulate the game getting timed for testing
+def convert_secs_to_hhmmss(seconds: int):
+    hh = str(int(seconds // 3600))
+    remaining_seconds = seconds % 3600
+    mm = str(int(remaining_seconds // 60))
+    ss = str(int(remaining_seconds % 60))
 
+    if len(hh) == 1:
+        hh = "0" + hh
+    if len(mm) == 1:
+        mm = "0" + mm
+    if len(ss) == 1:
+        ss = "0" + ss
+
+    return f'{hh}:{mm}:{ss}'
+
+def convert_hhmmss_to_seconds(hhmmss):
+    hh, mm, ss = hhmmss.split(':')
+    seconds = int(hh) * 3600 + int(mm) * 60 + int(ss)
+    return seconds
+
+
+# functions below to simulate the game getting timed for testing
 @record_time
 def mock_game():
     print("start")
