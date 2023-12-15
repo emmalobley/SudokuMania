@@ -53,7 +53,7 @@ to the user as a scoreboard with relevant scoring based on difficulty and play t
 
 ## User instructions 👩‍💻
 
-To run the program the user must first create the database in mysql by running the commands written in the file sql_code.sql.
+To run the program the user must first create the database in MySQL by running the commands written in the file sql_code.sql.
 
 The user must then allow a connection by updating the ‘HOST’, ‘USER’ and ‘PASSWORD’ values in the file config.py to the relevant values (username and password as set during MySQL installation).
 
