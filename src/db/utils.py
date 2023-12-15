@@ -122,7 +122,7 @@ def get_unfinished_board(player_name):
             print("Db connection is closed")
 
     if not result:
-        print("No unfinished puzzles for this user")
+        # no unfinished puzzles
         return
     # returns most recent unfinished board for that user
     return result[-1]
@@ -155,7 +155,7 @@ def get_score_info(player_name):
             print("Db connection is closed")
 
     if not result:
-        print("No unfinished puzzles for this user")
+        print("No completed puzzles for this user")
         return
 
     return result
