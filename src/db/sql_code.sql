@@ -31,7 +31,7 @@ ALTER TABLE boards
 	FOREIGN KEY (player_id)
 	REFERENCES player(player_id);
 
--- testing
+-- create completed boards for Jane so scoreboard can be generated
 --INSERT INTO player (player_name) VALUE ("Jane");
 --
 --

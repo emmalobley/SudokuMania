@@ -1,6 +1,4 @@
-from db.utils import save_player, get_score_info
-from timedecorator import convert_hhmmss_to_seconds
-import datetime
+from db.utils import get_score_info
 
 # gets player's name
 def get_player_name():
