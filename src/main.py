@@ -5,10 +5,15 @@ from db.utils import get_unfinished_board, save_player, get_player_id
 from copy import deepcopy
 
 
-def play_game(board, player_id):
+# play_game takes board, player_id and previous_time as inputs
+# board is an object in the sudoku class
+# player_id is the id of the player logged in (integer)
+# previous_time is the recorded time in seconds for the previously saved game if the user is continuing a game, else
+# it is set 0 if the user is starting a new game
+def play_game(board, player_id, previous_time):
 
     restart_board = deepcopy(board)
-    total_time = 0  # <-- THIS NEEDS TO FIND THE CURRENT TIME IF THE SUDOKU IS LISTED IN THE DATABASE
+    total_time = previous_time
     while True:
         # run the sudoku game loop, this breaks either when the game is solved or if the user types pause
         time_taken_seconds = sudoku_game_loop(board)
@@ -20,7 +25,8 @@ def play_game(board, player_id):
             if solved:
                 print("Well done!")
                 board.save_board(player_id, formatted_time)
-                return total_time
+                print(f"Time taken to solve sudoku (hh:mm:ss): {formatted_time}")
+                return
             else:
                 print("You have made a mistake somewhere.")
         else:
@@ -30,7 +36,8 @@ def play_game(board, player_id):
             choice = input("")
             if choice == 'exit':
                 board.save_board(player_id, formatted_time)
-                return total_time
+                print(f"Time taken so far (hh:mm:ss): {formatted_time}")
+                return
             elif choice == 'restart':
                 board = deepcopy(restart_board)
 
@@ -91,20 +98,17 @@ def main():
         choice = get_choice()
         if choice == 1:
             new_board = generate_new_board(get_difficulty())
-            # timer decorator returns time as string (hh:mm:ss)
-            time = play_game(new_board, player_id)
-            print(time)
+            # timer decorator returns time as integer seconds
+            play_game(new_board, player_id, 0)
 
         if choice == 2:
             try:
-                (old_time, continue_board) = format_db_board(get_unfinished_board(name))
+                (previous_time, continue_board) = format_db_board(get_unfinished_board(name))
                 print("Here is your previously saved game: ")
-                new_time = play_game(continue_board)
-                # print(old_time)
-                # print(new_time)
+                print(f"Time taken so far (hh:mm:ss): {convert_secs_to_hhmmss(previous_time)}")
+                play_game(continue_board, player_id, previous_time)
             except TypeError:
                 print("No unfinished puzzles for this user")
-            # need function to add the two timestamps - store total
 
         if choice == 3:
             get_user_score(name)
