@@ -5,6 +5,7 @@ class DbConnectionError(Exception):
     pass
 
 
+# saves a player to db - auto incremented player id is generated
 def save_player(player_name):
     try:
         db_connection = _connect_to_db()
@@ -25,6 +26,7 @@ def save_player(player_name):
     print("Player {} added to DB".format(player_name))
 
 
+# gets a given players id from the player board based on player name
 def get_player_id(player_name):
     try:
         db_connection = _connect_to_db()
@@ -54,13 +56,13 @@ def get_player_id(player_name):
     return result[0][0]
 
 
+# saves board and relevant info to db
 def save_board_to_db(boards_data):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
         print("Saving board to DB: sudoku")
 
-        # change cast based on time format
         query = ("""INSERT INTO boards({}) VALUES
                 ({}, '{}', '{}', CAST('{}' AS TIME(0)), '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')""".format(
             ','.join(boards_data.keys()),
@@ -90,12 +92,12 @@ def save_board_to_db(boards_data):
             db_connection.close()
 
 
+# retrieves the most recent uncompleted board for a given player
 def get_unfinished_board(player_name):
     try:
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
 
-        # check this query in python:
         query = """SELECT  b.difficulty, TIME_TO_SEC(b.total_time),
                         b.row_1, b.row_2, b.row_3, b.row_4,
                         b.row_5, b.row_6, b.row_7, b.row_8, b.row_9
@@ -103,7 +105,7 @@ def get_unfinished_board(player_name):
                 WHERE p.player_name = '{}' AND b.completed = False""".format(player_name)
 
         cur.execute(query)
-        result = cur.fetchall()  # check is fetchall is correct or if it's fetchmany
+        result = cur.fetchall()
 
         cur.close()
 
@@ -117,6 +119,7 @@ def get_unfinished_board(player_name):
     if not result:
         # no unfinished puzzles
         return
+
     # returns most recent unfinished board for that user
     return result[-1]
 
@@ -127,7 +130,6 @@ def get_score_info(player_name):
         db_connection = _connect_to_db()
         cur = db_connection.cursor()
 
-        # check this query in python:
         query = """SELECT  b.difficulty, TIME_TO_SEC(b.total_time)
                 FROM boards b INNER JOIN player p ON b.player_id = p.player_id
                 WHERE p.player_name = '{}' AND b.completed = True
@@ -139,7 +141,7 @@ def get_score_info(player_name):
                     END, total_time""".format(player_name)
 
         cur.execute(query)
-        result = cur.fetchall()  # check is fetchall is correct or if it's fetchmany
+        result = cur.fetchall()
 
         cur.close()
 
@@ -158,5 +160,4 @@ def get_score_info(player_name):
 
 
 if __name__ == '__main__':
-    print(get_score_info("Jane"))
     pass

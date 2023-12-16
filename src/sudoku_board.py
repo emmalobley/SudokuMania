@@ -2,11 +2,13 @@ import requests
 from db.utils import save_board_to_db
 
 
+# objects for this class are created for each board used by a player - new or continued
 class SudokuBoard:
     def __init__(self, board, difficulty):
         self.board = board
         self.difficulty = difficulty
 
+    # format board in ascii frame for better user readability
     def format_board(self):
         ascii_board = "\=======+=======+=======/\n" \
                       "| . . . | . . . | . . . |\n" \
@@ -42,9 +44,7 @@ class SudokuBoard:
 
         return result
 
-    # def get_board(self):
-    #     return self.board
-
+    # update a given cell in board with new number
     def update_board(self, row, col, num):
         self.board[row][col] = num
 
@@ -77,6 +77,7 @@ class SudokuBoard:
                     return False
         return True
 
+    # formats board as dictionary and uses dictionary to save board to db
     def save_board(self, player_id, time):
         boards_data = {
             "player_id": player_id,
@@ -88,11 +89,8 @@ class SudokuBoard:
             boards_data["row_{}".format(i + 1)] = ''.join(map(str, line))
         save_board_to_db(boards_data)
 
-# boolean function, validate if sudoku is completed
-# def completed_sudoku(board):
-#     return
 
-
+# call to api with difficulty choice
 def get_sudoku_from_api(difficulty):
     endpoint = 'https://sudoku-game-and-api.netlify.app/api/sudoku'
     response = requests.get(endpoint)
@@ -100,6 +98,7 @@ def get_sudoku_from_api(difficulty):
     return sudoku[difficulty]
 
 
+# generates object of SudokuBoard class from board retrieved from API
 def generate_new_board(difficulty):
     board = get_sudoku_from_api(difficulty)
     new_board = SudokuBoard(board, difficulty)
@@ -108,6 +107,7 @@ def generate_new_board(difficulty):
 
 
 # takes tuple with difficulty, time and 9 strings of 9 digits as arg and converts to correct format
+# used when user continues board retrieved from db
 def format_db_board(db_board):
     board = []
     difficulty = db_board[0]
@@ -116,10 +116,3 @@ def format_db_board(db_board):
     for line in db_board:
         board.append(list(map(int, line)))
     return time, SudokuBoard(board, difficulty)
-
-
-old_board = ('Easy', '00:23:11', '915678234', '743219568', '800054790', '109542680', '600793045', '050086009', '301467800', '580921470', '204805900')
-
-old_time, continue_board = format_db_board(old_board)
-print(old_time)
-print(continue_board)

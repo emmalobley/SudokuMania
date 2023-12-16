@@ -42,28 +42,3 @@ def convert_hhmmss_to_seconds(hhmmss):
     hh, mm, ss = hhmmss.split(':')
     seconds = int(hh) * 3600 + int(mm) * 60 + int(ss)
     return seconds
-
-
-# functions below to simulate the game getting timed for testing
-@record_time
-def mock_game():
-    print("start")
-
-    time.sleep(6)  # insert time in seconds here to test
-
-    print("stop")
-
-
-
-# testtime in seconds # 3600 = 1hr # 5400 = 1h30m # 7200 = 2h
-# tests the calc time function works in the hour+ ranges without waiting for hours
-
-# testtime = 5025.0000000345356
-# minutesTest = int(testtime // 60)
-# secondsTest = int(testtime % 60)
-# hoursTest = int(minutesTest // 60)
-#
-# minutesTest = minutesTest % 60
-#
-# formatted_timeTest = f"{hoursTest:02}:{minutesTest:02}:{secondsTest:02}"
-# print(f"(test) Time taken (hh:mm:ss): {formatted_timeTest} (test)")
