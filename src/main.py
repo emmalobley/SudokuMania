@@ -98,7 +98,6 @@ def main():
         choice = get_choice()
         if choice == 1:
             new_board = generate_new_board(get_difficulty())
-            # timer decorator returns time as integer seconds
             play_game(new_board, player_id, 0)
 
         if choice == 2:

@@ -86,6 +86,10 @@ def pretty_scoreboard(func):
 @pretty_scoreboard
 def get_user_score(player_name):
     scores = get_score_info(player_name)
+    # If the player has no completed games we return an empty string
+    if scores == None:
+        return ""
+
     for item in scores:
         score = 1800 - item[1]  # 30 minutes minus time taken
         # if over 30 minutes then score zero
