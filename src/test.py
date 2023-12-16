@@ -89,4 +89,6 @@ almost_complete = [[0, 2, 3, 6, 7, 8, 9, 4, 5],
                      [7, 4, 5, 3, 1, 6, 8, 9, 2]]
 almost_completeBoard = SudokuBoard(almost_complete, 'easy')
 
-play_game(almost_completeBoard)
+# play_game(almost_completeBoard)
+a = None
+print(a == None)

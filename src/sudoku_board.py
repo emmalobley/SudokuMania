@@ -88,10 +88,6 @@ class SudokuBoard:
             boards_data["row_{}".format(i + 1)] = ''.join(map(str, line))
         save_board_to_db(boards_data)
 
-# boolean function, validate if sudoku is completed
-# def completed_sudoku(board):
-#     return
-
 
 def get_sudoku_from_api(difficulty):
     endpoint = 'https://sudoku-game-and-api.netlify.app/api/sudoku'
@@ -116,10 +112,3 @@ def format_db_board(db_board):
     for line in db_board:
         board.append(list(map(int, line)))
     return time, SudokuBoard(board, difficulty)
-
-
-old_board = ('Easy', '00:23:11', '915678234', '743219568', '800054790', '109542680', '600793045', '050086009', '301467800', '580921470', '204805900')
-
-old_time, continue_board = format_db_board(old_board)
-print(old_time)
-print(continue_board)

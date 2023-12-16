@@ -1,5 +1,5 @@
 import unittest
-from main import SudokuBoard
+from sudoku_board import SudokuBoard
 
 # boards:
 # uncompleted board
@@ -37,13 +37,13 @@ completed_incorrect = [[2, 2, 3, 6, 7, 8, 9, 4, 5],
 completed_incorrectBoard = SudokuBoard(completed_incorrect, 'easy')
 
 
-class MyTestCase(unittest.TestCase):
+class TestCompleteAndCorrect(unittest.TestCase):
 
     def test_check_completed_on_incomplete(self):
-        self.assertEqual(uncompletedBoard.check_completed(), False)
+        self.assertFalse(uncompletedBoard.check_completed())
 
     def test_check_completed_on_complete(self):
-        self.assertEqual(completed_correctBoard.check_completed(), True)
+        self.assertTrue(completed_correctBoard.check_completed())
 
     def test_check_solution_on_correct(self):
         self.assertTrue(completed_correctBoard.check_solution())
@@ -51,6 +51,15 @@ class MyTestCase(unittest.TestCase):
     def test_check_solution_on_incorrect(self):
         self.assertFalse(completed_incorrectBoard.check_solution())
 
+
+# test_board = ('Easy', '00:23:11', '915678234', '743219568', '800054790', '109542680', '600793045', '050086009', '301467800',
+#          '580921470', '204805900')
+# current = time, continue_board = format_db_board(test_board)
+
+class TestDBConnection(unittest.TestCase):
+
+    def test_connection_to_db(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()
