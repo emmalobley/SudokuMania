@@ -1,5 +1,5 @@
 from timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
-from user import get_user_move, get_difficulty, get_player_name
+from user import get_user_move, get_difficulty, get_player_name, get_user_score
 from sudoku_board import SudokuBoard, generate_new_board, format_db_board
 from db.utils import get_unfinished_board, save_player, get_player_id
 from copy import deepcopy
@@ -94,8 +94,8 @@ def main():
             # timer decorator returns time as string (hh:mm:ss)
             time = play_game(new_board, player_id)
             print(time)
-        if choice == 2:
 
+        if choice == 2:
             try:
                 (old_time, continue_board) = format_db_board(get_unfinished_board(name))
                 print("Here is your previously saved game: ")
@@ -107,8 +107,8 @@ def main():
             # need function to add the two timestamps - store total
 
         if choice == 3:
-            #     find highscores in database and print them here
-            print("This is where highscores will go.")
+            get_user_score(name)
+
         if choice == 4:
             print("Thank you for playing!")
             exit()
