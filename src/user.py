@@ -10,7 +10,7 @@ def get_player_name():
 
 # get difficulty from user
 def get_difficulty():
-    difficulty = input("Please select difficulty: ").lower()
+    difficulty = input("Please choose a difficulty from easy, medium and hard: ").lower()
     while not valid_difficulty(difficulty):
         difficulty = input("Invalid choice. Please select difficulty: ").lower()
     return difficulty
