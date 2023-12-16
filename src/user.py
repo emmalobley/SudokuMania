@@ -1,4 +1,6 @@
 from db.utils import get_score_info
+from timedecorator import convert_secs_to_hhmmss
+
 
 # gets player's name
 def get_player_name():
@@ -64,11 +66,9 @@ def valid_number(number):
     return number in {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
-
 # wrapper for scoreboard
 def pretty_scoreboard(func):
     def wrapper(*args, **kwargs):
-
         print("*-*-*-*-*-*-*-*-*-*-*-*-*-*")
         print("       SCOREBOARD:         ")
         print("---------------------------")
@@ -82,10 +82,15 @@ def pretty_scoreboard(func):
 
     return wrapper
 
+
 # function to get user  - present relevant info in scoreboard
 @pretty_scoreboard
 def get_user_score(player_name):
     scores = get_score_info(player_name)
+    # If the player has no completed games we return an empty string
+    if scores == None:
+        return ""
+
     for item in scores:
         score = 1800 - item[1]  # 30 minutes minus time taken
         # if over 30 minutes then score zero
@@ -99,7 +104,6 @@ def get_user_score(player_name):
         elif item[0] == "hard":
             score = score + 500
 
-        print("   ", item[0].title(), "|", str(item[1]), "|", str(score), "   ")
+        print("   ", item[0].title(), "|", convert_secs_to_hhmmss(item[1]), "|", str(score), "   ")
 
     return ""
-

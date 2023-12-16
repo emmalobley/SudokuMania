@@ -1,6 +1,6 @@
 from timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
 from user import get_user_move, get_difficulty, get_player_name, get_user_score
-from sudoku_board import SudokuBoard, generate_new_board, format_db_board
+from sudoku_board import generate_new_board, format_db_board
 from db.utils import get_unfinished_board, save_player, get_player_id
 from copy import deepcopy
 
@@ -98,7 +98,6 @@ def main():
         choice = get_choice()
         if choice == 1:
             new_board = generate_new_board(get_difficulty())
-            # timer decorator returns time as integer seconds
             play_game(new_board, player_id, 0)
 
         if choice == 2:
