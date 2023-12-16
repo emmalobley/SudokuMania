@@ -5,11 +5,6 @@ import time
 def calc_time_taken(start_time, stop_time):
     # time_diff is the time taken in seconds
     time_diff = stop_time - start_time
-
-    # the following is code that prints time_diff in a readable format
-    time_taken = convert_secs_to_hhmmss(time_diff)
-    print(f"Time taken (hh:mm:ss): {time_taken}")
-
     return time_diff
 
 
