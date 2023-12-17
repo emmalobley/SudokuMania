@@ -4,6 +4,7 @@ from src.timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmms
 from sudoku_board import SudokuBoard
 from user import valid_number, valid_difficulty
 import time
+from src.db.connect import _connect_to_db
 
 # boards:
 # uncompleted board
@@ -97,12 +98,10 @@ class TestCases(unittest.TestCase):
         self.assertTrue("Medium")
         self.assertFalse(0)
 
+    # test to check the connection to the database
     def test_connection_to_db(self):
-        pass
-
-# test_board = ('Easy', '00:23:11', '915678234', '743219568', '800054790', '109542680', '600793045', '050086009', '301467800',
-#          '580921470', '204805900')
-# current = time, continue_board = format_db_board(test_board)
+        connection = _connect_to_db()
+        self.assertTrue(connection.is_connected())
 
 
 if __name__ == '__main__':
