@@ -1,5 +1,5 @@
-from db.utils import get_score_info
-from timedecorator import convert_secs_to_hhmmss
+from src.db.utils import get_score_info
+from src.time_decorator import convert_secs_to_hhmmss
 
 
 # gets player's name

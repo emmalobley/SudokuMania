@@ -1,6 +1,6 @@
 import unittest
 
-from src.timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
+from src.time_decorator import record_time, convert_secs_to_hhmmss
 import time
 
 
@@ -12,18 +12,19 @@ def mock_game():
 
 class TimingTestCases(unittest.TestCase):
 
-    # testing functions from timedecorator.py
+    # testing functions from time_decorator.py
     def test_record_time_decorator_6secs(self):
         self.assertTrue(mock_game, 6)
 
-    def test_convert_hhmmss_to_secs_1hour(self):
-        self.assertEqual(convert_hhmmss_to_seconds("01:00:00"), 3600)
-
-    def test_convert_hhmmss_to_secs_0hours(self):
-        self.assertEqual(convert_hhmmss_to_seconds("00:00:00"), 0)
-
-    def test_convert_hhmmss_to_secs_100hours(self):
-        self.assertEqual(convert_hhmmss_to_seconds("100:00:00"), 360000)
+    # old unit tests for the function convert_hhmmss_to_secs
+    # def test_convert_hhmmss_to_secs_1hour(self):
+    #     self.assertEqual(convert_hhmmss_to_seconds("01:00:00"), 3600)
+    #
+    # def test_convert_hhmmss_to_secs_0hours(self):
+    #     self.assertEqual(convert_hhmmss_to_seconds("00:00:00"), 0)
+    #
+    # def test_convert_hhmmss_to_secs_100hours(self):
+    #     self.assertEqual(convert_hhmmss_to_seconds("100:00:00"), 360000)
 
     def test_convert_secs_to_hhmmss_0secs(self):
         self.assertEqual("00:00:00", convert_secs_to_hhmmss(0))

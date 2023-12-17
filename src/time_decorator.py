@@ -37,11 +37,11 @@ def convert_secs_to_hhmmss(seconds: int):
 
     return f'{hh}:{mm}:{ss}'
 
-
-def convert_hhmmss_to_seconds(hhmmss):
-    hh, mm, ss = hhmmss.split(':')
-    seconds = int(hh) * 3600 + int(mm) * 60 + int(ss)
-    return seconds
+# This function was created but not used, it is the inverse of the function convert_secs_to_hhmss
+# def convert_hhmmss_to_seconds(hhmmss):
+#     hh, mm, ss = hhmmss.split(':')
+#     seconds = int(hh) * 3600 + int(mm) * 60 + int(ss)
+#     return seconds
 
 
 # functions below to simulate the game getting timed for testing
