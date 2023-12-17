@@ -42,6 +42,7 @@ def play_game(board, player_id, previous_time):
                 board = deepcopy(restart_board)
 
 
+
 @record_time
 def sudoku_game_loop(board):
     print("Type pause to pause the timer and access exit, restart and continue functions.")
@@ -71,7 +72,7 @@ def print_menu_options():
         print(str(i + 1) + ": " + menu_options[i + 1])
 
 
-# get choice from user - handles exception
+# get choice from user - handles ValueError exception
 def get_choice():
     while True:
         try:
@@ -88,7 +89,7 @@ def get_choice():
 # ~~~~~~~~~~~ main game loop ~~~~~~~~~~~~~~~~~~
 
 def main():
-    print("Welcome to sudoku!")
+    print("Welcome to SudokuMania!")
     name = get_player_name()
     save_player(name)
     player_id = get_player_id(name)

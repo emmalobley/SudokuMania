@@ -16,11 +16,13 @@ def get_difficulty():
     return difficulty
 
 
-# check user choice of number valid
+# check user choice of difficulty is valid
 def valid_difficulty(difficulty):
     return difficulty in {"easy", "medium", "hard"}
 
 
+# get user choice of row, col and updated number
+# exception raised for ValueErrors
 def get_user_move():
     user_row = ""
     user_col = ""
@@ -33,7 +35,7 @@ def get_user_move():
             else:
                 user_row = int(user_row)
 
-        except (ValueError, TypeError):
+        except ValueError:
             print("Invalid. Try again.")
 
     while not valid_number(user_col):
@@ -44,7 +46,7 @@ def get_user_move():
             else:
                 user_col = int(user_col)
 
-        except (ValueError, TypeError):
+        except ValueError:
             print("Invalid. Try again.")
 
     while not valid_number(user_num):
@@ -55,18 +57,18 @@ def get_user_move():
             else:
                 user_num = int(user_num)
 
-        except (ValueError, TypeError):
+        except ValueError:
             print("Invalid. Try again.")
 
     return user_row - 1, user_col - 1, user_num
 
 
-# check user choice of number valid
+# check user choice of number is valid
 def valid_number(number):
     return number in {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 
-# wrapper for scoreboard
+# wrapper for scoreboard - make it look pretty
 def pretty_scoreboard(func):
     def wrapper(*args, **kwargs):
         print("*-*-*-*-*-*-*-*-*-*-*-*-*-*")
@@ -83,7 +85,7 @@ def pretty_scoreboard(func):
     return wrapper
 
 
-# function to get user  - present relevant info in scoreboard
+# function to get users scores for completed boards  - present relevant info in scoreboard
 @pretty_scoreboard
 def get_user_score(player_name):
     scores = get_score_info(player_name)
