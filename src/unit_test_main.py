@@ -2,6 +2,7 @@ import unittest
 
 from src.timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
 from sudoku_board import SudokuBoard
+from user import valid_number, valid_difficulty
 import time
 
 # boards:
@@ -79,6 +80,22 @@ class TestCases(unittest.TestCase):
 
     def test_convert_secs_to_hhmmss_60secs(self):
         self.assertEqual("00:01:00", convert_secs_to_hhmmss(60))
+
+    # test valid_number and valid_difficulty
+    def test_valid_numbers(self):
+        with self.assertRaises(Exception):
+            valid_number()
+
+        self.assertTrue(valid_number(1))
+        self.assertFalse(valid_number(11))
+        self.assertFalse(valid_number("1"))
+
+    def test_valid_difficulty(self):
+        with self.assertRaises(Exception):
+            valid_difficulty()
+        self.assertTrue("easy")
+        self.assertTrue("Medium")
+        self.assertFalse(0)
 
     def test_connection_to_db(self):
         pass
