@@ -1,8 +1,7 @@
 import unittest
 
-from src.timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
 from sudoku_board import SudokuBoard
-import time
+
 
 # boards:
 # uncompleted board
@@ -39,15 +38,9 @@ completed_incorrect = [[2, 2, 3, 6, 7, 8, 9, 4, 5],
                        [7, 4, 5, 3, 1, 6, 8, 9, 2]]
 completed_incorrectBoard = SudokuBoard(completed_incorrect, 'easy')
 
-# functions below to simulate the game getting timed for testing
-@record_time
-def mock_game():
-    time.sleep(6)  # insert time in seconds here to test
+class SudokuClassTests(unittest.TestCase):
 
-
-class TestCases(unittest.TestCase):
-
-    # testing sudoku board method check_complete
+# testing sudoku board method check_complete
     def test_check_completed_on_incomplete(self):
         self.assertFalse(uncompletedBoard.check_completed())
 
@@ -60,32 +53,6 @@ class TestCases(unittest.TestCase):
 
     def test_check_solution_on_incorrect(self):
         self.assertFalse(completed_incorrectBoard.check_solution())
-
-    # testing functions from timedecorator.py
-    def test_record_time_decorator_6secs(self):
-        self.assertTrue(mock_game, 6)
-
-    def test_convert_hhmmss_to_secs_1hour(self):
-        self.assertEqual(convert_hhmmss_to_seconds("01:00:00"), 3600)
-
-    def test_convert_hhmmss_to_secs_0hours(self):
-        self.assertEqual(convert_hhmmss_to_seconds("00:00:00"), 0)
-
-    def test_convert_hhmmss_to_secs_100hours(self):
-        self.assertEqual(convert_hhmmss_to_seconds("100:00:00"), 360000)
-
-    def test_convert_secs_to_hhmmss_0secs(self):
-        self.assertEqual("00:00:00", convert_secs_to_hhmmss(0))
-
-    def test_convert_secs_to_hhmmss_60secs(self):
-        self.assertEqual("00:01:00", convert_secs_to_hhmmss(60))
-
-    def test_connection_to_db(self):
-        pass
-
-# test_board = ('Easy', '00:23:11', '915678234', '743219568', '800054790', '109542680', '600793045', '050086009', '301467800',
-#          '580921470', '204805900')
-# current = time, continue_board = format_db_board(test_board)
 
 
 if __name__ == '__main__':
