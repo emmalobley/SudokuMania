@@ -1,10 +1,7 @@
 import unittest
 
-from src.timedecorator import record_time, convert_secs_to_hhmmss, convert_hhmmss_to_seconds
 from sudoku_board import SudokuBoard
-from user import valid_number, valid_difficulty
-import time
-from src.db.connect import _connect_to_db
+
 
 # boards:
 # uncompleted board
@@ -41,15 +38,9 @@ completed_incorrect = [[2, 2, 3, 6, 7, 8, 9, 4, 5],
                        [7, 4, 5, 3, 1, 6, 8, 9, 2]]
 completed_incorrectBoard = SudokuBoard(completed_incorrect, 'easy')
 
-# functions below to simulate the game getting timed for testing
-@record_time
-def mock_game():
-    time.sleep(6)  # insert time in seconds here to test
+class SudokuClassTests(unittest.TestCase):
 
-
-class TestCases(unittest.TestCase):
-
-    # testing sudoku board method check_complete
+# testing sudoku board method check_complete
     def test_check_completed_on_incomplete(self):
         self.assertFalse(uncompletedBoard.check_completed())
 
@@ -62,46 +53,6 @@ class TestCases(unittest.TestCase):
 
     def test_check_solution_on_incorrect(self):
         self.assertFalse(completed_incorrectBoard.check_solution())
-
-    # testing functions from timedecorator.py
-    def test_record_time_decorator_6secs(self):
-        self.assertTrue(mock_game, 6)
-
-    def test_convert_hhmmss_to_secs_1hour(self):
-        self.assertEqual(convert_hhmmss_to_seconds("01:00:00"), 3600)
-
-    def test_convert_hhmmss_to_secs_0hours(self):
-        self.assertEqual(convert_hhmmss_to_seconds("00:00:00"), 0)
-
-    def test_convert_hhmmss_to_secs_100hours(self):
-        self.assertEqual(convert_hhmmss_to_seconds("100:00:00"), 360000)
-
-    def test_convert_secs_to_hhmmss_0secs(self):
-        self.assertEqual("00:00:00", convert_secs_to_hhmmss(0))
-
-    def test_convert_secs_to_hhmmss_60secs(self):
-        self.assertEqual("00:01:00", convert_secs_to_hhmmss(60))
-
-    # test valid_number and valid_difficulty
-    def test_valid_numbers(self):
-        with self.assertRaises(Exception):
-            valid_number()
-
-        self.assertTrue(valid_number(1))
-        self.assertFalse(valid_number(11))
-        self.assertFalse(valid_number("1"))
-
-    def test_valid_difficulty(self):
-        with self.assertRaises(Exception):
-            valid_difficulty()
-        self.assertTrue("easy")
-        self.assertTrue("Medium")
-        self.assertFalse(0)
-
-    # test to check the connection to the database
-    def test_connection_to_db(self):
-        connection = _connect_to_db()
-        self.assertTrue(connection.is_connected())
 
 
 if __name__ == '__main__':
