@@ -1,7 +1,7 @@
-from time_decorator import record_time, convert_secs_to_hhmmss
-from user import get_user_move, get_difficulty, get_player_name, get_user_score
-from sudoku_board import generate_new_board, format_db_board
-from db.utils import get_unfinished_board, save_player, get_player_id
+from src.time_decorator import record_time, convert_secs_to_hhmmss
+from src.user import get_user_move, get_difficulty, get_player_name, get_user_score
+from src.sudoku_board import generate_new_board, format_db_board
+from src.db.utils import get_unfinished_board, save_player, get_player_id
 from copy import deepcopy
 
 
