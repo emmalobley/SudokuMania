@@ -2,6 +2,7 @@ import unittest
 
 from src.db.connect import _connect_to_db
 
+
 class dbConnectionTest(unittest.TestCase):
 
     # test to check the connection to the database

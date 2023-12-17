@@ -1,6 +1,7 @@
 import unittest
 
-from user import valid_number, valid_difficulty
+from src.user import valid_number, valid_difficulty
+
 
 class UserTests(unittest.TestCase):
 

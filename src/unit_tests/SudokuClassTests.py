@@ -1,7 +1,6 @@
 import unittest
 
-from sudoku_board import SudokuBoard
-
+from src.sudoku_board import SudokuBoard
 
 # boards:
 # uncompleted board
@@ -38,14 +37,18 @@ completed_incorrect = [[2, 2, 3, 6, 7, 8, 9, 4, 5],
                        [7, 4, 5, 3, 1, 6, 8, 9, 2]]
 completed_incorrectBoard = SudokuBoard(completed_incorrect, 'easy')
 
+
 class SudokuClassTests(unittest.TestCase):
 
-# testing sudoku board method check_complete
+    # testing sudoku board method check_complete
     def test_check_completed_on_incomplete(self):
         self.assertFalse(uncompletedBoard.check_completed())
 
-    def test_check_completed_on_complete(self):
+    def test_check_completed_on_complete_correct(self):
         self.assertTrue(completed_correctBoard.check_completed())
+
+    def test_check_completed_on_complete_incorrect(self):
+        self.assertTrue(completed_incorrectBoard.check_completed())
 
     # testing sudoku board method check_solution
     def test_check_solution_on_correct(self):

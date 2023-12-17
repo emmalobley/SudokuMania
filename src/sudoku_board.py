@@ -1,5 +1,5 @@
 import requests
-from db.utils import save_board_to_db
+from src.db.utils import save_board_to_db
 
 
 # objects for this class are created for each board used by a player - new or continued
