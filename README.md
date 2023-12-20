@@ -57,7 +57,7 @@ To run the program the user must first create the database in MySQL by running t
 
 The user must then allow a connection by updating the ‘HOST’, ‘USER’ and ‘PASSWORD’ values in the file config.py to the relevant values (username and password as set during MySQL installation).
 
-If the user has not previously installed the mysql-connector then they must also run in their terminal:
+If the user has not previously installed the mysql-connector then they must also run it in their terminal:
 
 ```bash
 -m pip install mysql-connector-python 
